@@ -1,9 +1,10 @@
 ---
 import { Image } from '@astrojs/image/components'
 import GalleryLayout from '@layouts/galleryLayout.astro'
-// const { href } = Astro.url
-// const url = `${href}all.json`
-const res = await fetch('https://ekar-gallery.netlify.app/all.json')
+
+const { url } = Astro.request
+const href = `${url}all.json`
+const res = await fetch(href)
 const workList = await res.json();
 ---
 
