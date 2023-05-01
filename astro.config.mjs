@@ -12,10 +12,10 @@ export default defineConfig({
   },
   integrations: [
     unocss(
-    { injectReset: true },
-  ),
-  image(),
-],
+      { injectReset: true },
+    ),
+    image(),
+  ],
   server: {
     port: 8000,
     host: true,
