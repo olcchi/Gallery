@@ -1,18 +1,18 @@
 ---
 import { Image } from '@astrojs/image/components'
 import GalleryLayout from '@layouts/galleryLayout.astro'
-let url
-import.meta.env.PROD ? url = 'https://ekar-gallery.netlify.app/' : url = Astro.request.url
-const href = `${url}all.json`
-const res = await fetch(href)
+
+const href = import.meta.env.PROD ? 'https://ekargallery.netlify.app/' : Astro.request.url
+const url = `${href}all.json`
+const res = await fetch(url)
 const workList = await res.json()
+
 ---
 
 <GalleryLayout>
   <main class="prose">
     <p class="font-serif">Gallery</p>
     <section class="font-sans grid md:grid-cols-2 gap-2 place-items-center">
-      <a href={href}>{href}</a>
       {
         workList.map((work) => {
           return (
