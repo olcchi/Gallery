@@ -1,7 +1,8 @@
 ---
 import { Image } from '@astrojs/image/components'
 import GalleryLayout from '@layouts/galleryLayout.astro'
-const url = 'http://localhost:8000/all.json'
+const { href } = Astro.url
+const url = `${href}all.json`
 const res = await fetch(url)
 const workList = await res.json();
 ---
