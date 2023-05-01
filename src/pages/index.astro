@@ -4,8 +4,8 @@ import GalleryLayout from '@layouts/galleryLayout.astro'
 
 const { url } = Astro.request
 const href = `${url}all.json`
-// const res = await fetch(href)
-// const workList = await res.json()
+const res = await fetch(href)
+const workList = await res.json()
 ---
 
 <GalleryLayout>
@@ -13,7 +13,7 @@ const href = `${url}all.json`
     <p class="font-serif">Gallery</p>
     <section class="font-sans grid md:grid-cols-2 gap-2 place-items-center">
       <a href={href}>{href}</a>
-      <!-- {
+      {
         workList.map((work) => {
           return (
             <div id="workWrapper" class="relative">
@@ -26,7 +26,7 @@ const href = `${url}all.json`
               </a>
               <Image
                 id="workImage"
-                width={'600'}
+                width={600}
                 aspectRatio={1 / 1}
                 class="transition-all"
                 format={'webp'}
@@ -35,7 +35,7 @@ const href = `${url}all.json`
             </div>
           )
         })
-      } -->
+      }
     </section>
     <section class="flex">
       <p class="font-serif"><a href="https://ekar.site" class="decoration-none">:: ekar</a></p>
