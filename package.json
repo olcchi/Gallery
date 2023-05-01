@@ -1,5 +1,5 @@
 {
-  "name": "site-v2",
+  "name": "gallery",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
@@ -14,7 +14,7 @@
     "@astrojs/image": "^0.16.6",
     "@iconify-json/ph": "^1.1.5",
     "astro": "^2.2.2",
-    "vite": "^4.2.1"  
+    "vite": "^4.2.1"
   },
   "devDependencies": {
     "@evan-yang/eslint-config": "^1.0.9",
