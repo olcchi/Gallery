@@ -17,9 +17,8 @@ const { title } = Astro.props;
     <link rel="icon" href="/favicon.svg">
   </head>
   <body class="defaultDark defaultLight">
-    <!-- <MaskHeader/> -->
     <main class="grid grid-cols-[1fr_min(55ch,90%)_1fr] ">
-      <article class="min-h-screen relative col-start-2 col-end-3">
+      <article class="min-h-screen flex flex-col justify-center relative col-start-2 col-end-3">
           <slot />
       </article>
     </main>
