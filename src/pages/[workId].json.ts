@@ -14,12 +14,12 @@ const workIndex: Record<string, number> = {
   un: 1,
   al: 2,
   ne: 3,
-  all: 5,
+  all: 4,
 }
 export const get: APIRoute = async({ params }) => {
   const index = workIndex[params.workId!]
   const work = index !== undefined
-    ? index === 5
+    ? index === 4
       ? workRecords.map(({ workName, cover, placeHolder }) => ({ workName, cover, placeHolder }))
       : workRecords[index]
     : null
