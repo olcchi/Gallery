@@ -4,32 +4,35 @@ export interface Props {
   coverUrl: string;
   placeholderUrl: string;
 }
-const { coverUrl, placeholderUrl } = Astro.props
+const { coverUrl, placeholderUrl } = Astro.props;
 ---
+
 <main class="clatalogItem">
-    <div
+  <div
     id="mask"
-    class="absolute w-full h-full backdrop-blur-md opacity-100 z-20 transition-all duration-500 ease-in-out "
-    />
-    <Image
-    alt='cover'
+    class="absolute w-full h-full backdrop-blur-md opacity-100 z-20 transition-all duration-500 ease-in-out"
+  >
+  </div>
+
+  <Image
+    alt="cover"
     width={600}
     aspectRatio={1}
     class="coverImage transition-all z-0"
     format={'webp'}
     src={coverUrl}
     quality={100}
-    />
+  />
 
-    <Image
-    alt='placeholder'
+  <Image
+    alt="placeholder"
     width={600}
     aspectRatio={1}
     class="placeholderImage transition-all absolute top-0 left-0 z-10"
     format={'webp'}
     src={placeholderUrl}
     quality={1}
-    />
+  />
 </main>
 
 <script>

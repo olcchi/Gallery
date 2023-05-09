@@ -6,7 +6,15 @@ const href = import.meta.env.PROD
   : Astro.request.url
 const url = `${href}all.json`
 const res = await fetch(url)
-const workList = await res.json();
+const workList = await res.json()
+const workLists = workList.map((i) => {
+  return {
+    workName: i.workName,
+    cover: i.cover[0].url,
+    placeHolder: i.placeHolder[0].url,
+  }
+})
+console.log(workLists);
 ---
 
 <GalleryLayout>
@@ -17,7 +25,7 @@ const workList = await res.json();
       class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
     >
       {
-        workList.map((work) => {
+        workLists.map((work) => {
           return (
             <div id="" class="relative">
               <a
@@ -28,7 +36,7 @@ const workList = await res.json();
                 {work.workName}
               </a>
               <div class="relative">
-                <Image coverUrl={work.cover[0].url} placeholderUrl={work.placeHolder[0].url} />
+                <Image coverUrl={work.cover} placeholderUrl={work.placeHolder} />
               </div>
             </div>
           )
