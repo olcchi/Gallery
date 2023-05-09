@@ -19,21 +19,19 @@
     @apply dark:text-black dark:bg-white bg-black text-white;
   }
 
-  @keyframes blur-in {
+  @keyframes slide-in {
   from {
-    filter:blur(10px);
-    transform:scale(0.98);
+    transform: translateY(10px);
     opacity: 0
   }
 
   to {
-    filter:blur(0px);
-    transform:scale(1);
+    transform: translateY(0px);
     opacity: 100
   }
 }
 
-.blur-in {
-  animation: blur-in 1s ease;
+.slide-in {
+  animation: slide-in 1s ease;
   animation-fill-mode: both;
 }
