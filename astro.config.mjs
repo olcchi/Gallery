@@ -3,7 +3,7 @@ import unocss from 'unocss/astro'
 import image from '@astrojs/image'
 
 export default defineConfig({
-  site: 'https://ekar.site',
+  // site: 'https://ekar.site',
   markdown: {
     shikiConfig: {
       theme: 'css-variables',
@@ -12,10 +12,10 @@ export default defineConfig({
   },
   integrations: [
     unocss(
-    { injectReset: true },
-  ),
-  image(),
-],
+      { injectReset: true },
+    ),
+    image(),
+  ],
   server: {
     port: 8000,
     host: true,

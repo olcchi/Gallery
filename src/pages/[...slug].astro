@@ -1,0 +1,62 @@
+---
+import { Image } from '@astrojs/image/components'
+import GalleryLayout from '@layouts/galleryLayout.astro'
+export async function getStaticPaths() {
+  const pages = [
+    {
+      slug: 'turpan',
+      requestWork: 'tu',
+    },
+    {
+      slug: 'un',
+      requestWork: 'tu',
+    },
+    {
+      slug: 'al',
+      requestWork: 'tu',
+    },
+    {
+      slug: 'ne',
+      requestWork: 'tu',
+    },
+  ]
+  return pages.map(({ slug, requestWork }) => {
+    return {
+      params: { slug },
+      props: { requestWork },
+    }
+  })
+}
+
+const { requestWork } = Astro.props
+
+const href = import.meta.env.PROD
+  ? 'https://ekargallery.netlify.app/'
+  : Astro.url.origin
+const url = `${href}/${requestWork}.json`
+
+const res = await fetch(url)
+const picList2 = await res.json();
+---
+
+<GalleryLayout>
+  <div class="">
+    {
+      picList2.picture.map((p) => {
+        return (
+          <div>
+            <Image
+              class="mb-5"
+              quality={100}
+              width={600}
+              format={'webp'}
+              src={p.url}
+              alt='image'
+              aspectRatio={'auto'}
+            />
+          </div>
+        )
+      })
+    }
+  </div>
+</GalleryLayout>

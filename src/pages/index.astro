@@ -1,50 +1,50 @@
 ---
-import { Image } from '@astrojs/image/components'
 import GalleryLayout from '@layouts/galleryLayout.astro'
-import localImage from '../../assets/bg.png'
-// const classList = [
-//   'opacity-0',
-//   'animate-slideInUp',
-//   'animate-fill-both',
-//   'font-sans',
-//   'font-medium',
-//   'mt-8',
-// ]
-// const { title, text } = Astro.props;
+import Image from '@components/Image.astro'
+const href = import.meta.env.PROD
+  ? 'https://ekargallery.netlify.app/'
+  : Astro.request.url
+const url = `${href}all.json`
+const res = await fetch(url)
+const workList = await res.json();
 ---
 
 <GalleryLayout>
-  <main class="prose mt-20">
-    <p class=" font-serif">Gallery-T</p>
-    <section class="font-sans grid md:grid-cols-2  gap-4 prose">
-      <div id="workWrapper" class="relative">
-        <a href="" id="workName" class=" absolute flex flex-col items-center justify-center text-xl font-serif z-10 opacity-0 h-full w-full decoration-none">Turpan</a>
-        <Image id='workImage' class='transition-all' src={localImage} />
-      </div>
-      <div id="workWrapper" class="relative">
-        <a href="" id="workName" class=" absolute flex flex-col items-center justify-center text-xl font-serif z-10 opacity-0 h-full w-full decoration-none">Turpan</a>
-        <Image id='workImage' class='transition-all' src={localImage} />
-      </div>
-      <div id="workWrapper" class="relative">
-        <a href="" id="workName" class=" absolute flex flex-col items-center justify-center text-xl font-serif z-10 opacity-0 h-full w-full decoration-none">Turpan</a>
-        <Image id='workImage' class='transition-all' src={localImage} />
-      </div>
+  <main class="prose slide-in">
+    <p class="font-serif animate-fill-both">Gallery</p>
+    <section
+      id="workCatalog"
+      class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
+    >
+      {
+        workList.map((work) => {
+          return (
+            <div id="" class="relative">
+              <a
+                href="/turpan"
+                id="workName"
+                class=" w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-0 decoration-none backdrop-blur-sm"
+              >
+                {work.workName}
+              </a>
+              <div class="relative">
+                <Image coverUrl={work.cover[0].url} placeholderUrl={work.placeHolder[0].url} />
+              </div>
+            </div>
+          )
+        })
+      }
+    </section>
+    <section class="flex">
+      <p class="font-serif">
+        <a href="https://ekar.site" class="decoration-none">:: ekar</a>
+      </p>
     </section>
   </main>
 </GalleryLayout>
 
-<style is:global>
-
-  #workWrapper:hover #workName {
-    @apply  hover:opacity-100 transition-all ease-in-out transition-all decoration-none
-  }
-  #workWrapper:hover #workImage {
-    @apply opacity-60 transition-all ease-in-out
-  }
-  #blockTitle {
-    @apply md:text-base font-extrabold italic;
-  }
-  #blockTitle::before {
-    content: ":: ";
+<style>
+  #workCatalog:hover #workName {
+    @apply hover:opacity-100 transition-all ease-in-out transition-all decoration-none;
   }
 </style>
