@@ -1,59 +1,50 @@
 ---
-import { Image } from '@astrojs/image/components'
 import GalleryLayout from '@layouts/galleryLayout.astro'
-
-const href = import.meta.env.PROD ? 'https://ekargallery.netlify.app/' : Astro.request.url
+import Image from '@components/Image.astro'
+const href = import.meta.env.PROD
+  ? 'https://ekargallery.netlify.app/'
+  : Astro.request.url
 const url = `${href}all.json`
 const res = await fetch(url)
-const workList = await res.json()
-
+const workList = await res.json();
 ---
 
 <GalleryLayout>
-  <main class="prose">
-    <p class="font-serif">Gallery</p>
-    <section class="font-sans grid md:grid-cols-2 gap-2 place-items-center">
+  <main class="prose slide-in">
+    <p class="font-serif animate-fill-both">Gallery</p>
+    <section
+      id="workCatalog"
+      class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
+    >
       {
         workList.map((work) => {
           return (
-            <div id="workWrapper" class="relative">
+            <div id="" class="relative">
               <a
-                href=""
+                href="/turpan"
                 id="workName"
-                class=" w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-10 opacity-0 decoration-none dark:text-black text-white backdrop-blur-sm"
+                class=" w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-0 decoration-none backdrop-blur-sm"
               >
                 {work.workName}
               </a>
-              <Image
-                id="workImage"
-                width={600}
-                aspectRatio={1 / 1}
-                class="transition-all"
-                format={'webp'}
-                src={work.Cover[0].url}
-              />
+              <div class="relative">
+                <Image coverUrl={work.cover[0].url} placeholderUrl={work.placeHolder[0].url} />
+              </div>
             </div>
           )
         })
       }
     </section>
     <section class="flex">
-      <p class="font-serif"><a href="https://ekar.site" class="decoration-none">:: ekar</a></p>
+      <p class="font-serif">
+        <a href="https://ekar.site" class="decoration-none">:: ekar</a>
+      </p>
     </section>
   </main>
 </GalleryLayout>
 
-<style is:global>
-  #workWrapper:hover #workName {
+<style>
+  #workCatalog:hover #workName {
     @apply hover:opacity-100 transition-all ease-in-out transition-all decoration-none;
-  }
-  #workWrapper:hover #workImage {
-    @apply opacity-80 transition-all ease-in-out;
-  }
-  #blockTitle {
-    @apply md:text-base font-extrabold italic;
-  }
-  #blockTitle::before {
-    content: ":: ";
   }
 </style>
