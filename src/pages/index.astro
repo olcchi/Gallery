@@ -1,20 +1,25 @@
 ---
 import GalleryLayout from '@layouts/galleryLayout.astro'
 import Image from '@components/Image.astro'
+
 const href = import.meta.env.PROD
   ? 'https://ekargallery.netlify.app/'
   : Astro.request.url
 const url = `${href}all.json`
 const res = await fetch(url)
 const workList = await res.json()
+
 const workLists = workList.map((i) => {
+  console.log('Object---', i)
+  // console.log('WorkName---', i.workName)
+  // console.log('Read other property---', i.cover)
   return {
     workName: i.workName,
-    cover: i.cover[0].url,
-    placeHolder: i.placeHolder[0].url,
+    // cover: i.cover[0].url,
+    // placeHolder: i.placeHolder[0].url,
   }
 })
-console.log(workLists);
+
 ---
 
 <GalleryLayout>
@@ -36,7 +41,7 @@ console.log(workLists);
                 {work.workName}
               </a>
               <div class="relative">
-                <Image coverUrl={work.cover} placeholderUrl={work.placeHolder} />
+
               </div>
             </div>
           )
