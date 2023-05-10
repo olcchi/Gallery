@@ -9,17 +9,6 @@ const url = `${href}all.json`
 const res = await fetch(url)
 const workList = await res.json()
 
-const workLists = workList.map((i) => {
-  console.log('Object---', i)
-  // console.log('WorkName---', i.workName)
-  // console.log('Read other property---', i.cover)
-  return {
-    workName: i.workName,
-    // cover: i.cover[0].url,
-    // placeHolder: i.placeHolder[0].url,
-  }
-})
-
 ---
 
 <GalleryLayout>
@@ -30,7 +19,7 @@ const workLists = workList.map((i) => {
       class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
     >
       {
-        workLists.map((work) => {
+        workList.map((work) => {
           return (
             <div id="" class="relative">
               <a
@@ -41,7 +30,7 @@ const workLists = workList.map((i) => {
                 {work.workName}
               </a>
               <div class="relative">
-
+            <Image coverUrl={work.coverImage[0].url} placeholderUrl={work.placeHolderImage[0].url} />
               </div>
             </div>
           )
