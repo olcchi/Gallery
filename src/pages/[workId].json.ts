@@ -22,7 +22,7 @@ export const get: APIRoute = async({ params }) => {
   const work = index !== undefined
     ? index === 4
       ? workRecords.map(({ workName, coverImage, placeHolderImage }) => ({ workName, coverImage, placeHolderImage }))
-      : workRecords[index]
+      : workRecords[index].picture
     : null
   return {
     body: JSON.stringify(work),
