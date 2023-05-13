@@ -1,0 +1,30 @@
+---
+import { Image } from '@astrojs/image/components'
+---
+   <div
+      class="left-0 top-0 w-full h-full fixed flex items-center justify-center"
+    >
+      <div class="flex flex-col max-w-5/6 gap-2 relative">
+        <Image
+          class="modalImg z-20 max-h-2xl w-auto"
+          width={600}
+          aspectRatio={'origin'}
+          src={' '}
+          alt="Image"
+        />
+      </div>
+      <div class="flex items-center absolute justify-end z-20 bottom-10 select-none italic font-sans gap-2">
+        <span class="close cursor-pointer hover:opacity-50 p-1">return</span>
+        <span class="">/</span>
+        <span class="prev cursor-pointer hover:opacity-50 p-1">prev</span>
+        <span class="hidden">/</span>
+        <span class="curIndex cursor-pointer hover:opacity-50 p-1"></span>
+        <span class="">/</span>
+        <span class="next cursor-pointer hover:opacity-50 p-1">next</span>
+      </div>
+      <div
+        class="modal w-full h-full dark:bg-black/80 bg-white/80 absolute z-10 backdrop-blur-sm"
+      >
+      </div>
+      <i class="i-ph-x fixed text-xl z-10 top-5 right-5 close" />
+    </div>
