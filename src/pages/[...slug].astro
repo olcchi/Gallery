@@ -1,62 +1,149 @@
 ---
 import { Image } from '@astrojs/image/components'
-import GalleryLayout from '@layouts/galleryLayout.astro'
+import WorkLayout from '@layouts/workLayout.astro'
+import ModalImage from '@components/modalImage.astro'
 export async function getStaticPaths() {
   const pages = [
     {
-      slug: 'turpan',
-      requestWork: 'tu',
+      slug: 'Turpan',
+      work: 'tu',
+      route: 'turpan',
     },
     {
-      slug: 'un',
-      requestWork: 'tu',
+      slug: 'Unnoticed',
+      work: 'un',
+      route: 'unnoticed',
     },
     {
-      slug: 'al',
-      requestWork: 'tu',
+      slug: 'Another_Landscape',
+      work: 'al',
+      route: 'Another Landscape',
     },
     {
-      slug: 'ne',
-      requestWork: 'tu',
+      slug: 'Never_Know_How_Much_I_Love_You',
+      work: 'ne',
+      route: 'Never Know How Much I Love You',
     },
   ]
-  return pages.map(({ slug, requestWork }) => {
+  return pages.map(({ slug, work, route }) => {
     return {
       params: { slug },
-      props: { requestWork },
+      props: { work, route },
     }
   })
 }
 
-const { requestWork } = Astro.props
+const { work, route } = Astro.props
 
 const href = import.meta.env.PROD
   ? 'https://ekargallery.netlify.app/'
   : Astro.url.origin
-const url = `${href}/${requestWork}.json`
+const url = `${href}/${work}.json`
 
 const res = await fetch(url)
-const picList2 = await res.json();
+const picList = await res.json()
+const columns = 4
+function splitPhotosIntoColumns(photos: string[], columns: number): string[][] {
+  const result = new Array(columns).fill(null).map(():string[] => [])
+
+  photos.forEach((photo, index) => {
+    const column = index % columns
+    result[column].push(photo)
+  })
+
+  return result
+}
+const photos = splitPhotosIntoColumns(picList, columns);
 ---
 
-<GalleryLayout>
-  <div class="">
-    {
-      picList2.picture.map((p) => {
-        return (
-          <div>
-            <Image
-              class="mb-5"
-              quality={100}
-              width={600}
-              format={'webp'}
-              src={p.url}
-              alt='image'
-              aspectRatio={'origin'}
-            />
-          </div>
-        )
-      })
-    }
-  </div>
-</GalleryLayout>
+<WorkLayout title={route}>
+  <main class="workWrapper prose">
+    <div class="modalImageWrapper hidden">
+      <ModalImage />
+    </div>
+      <p class="text-xl font-serif">{route}</p>
+    <div class="grid grid-cols-4 gap-2 mb-25">
+      {
+        photos.map((l) => {
+          return (
+            <div class="w-full flex flex-col gap-2">
+              {l.map((p:any) => {
+                return (
+                  <Image
+                    class="placeHolderImage w-full cursor-pointer"
+                    width={200}
+                    aspectRatio={'origin'}
+                    data-src={p.url}
+                    src={p.url}
+                    format={'webp'}
+                    loading={'lazy'}
+                    quality={100}
+                    alt="Image"
+                  />
+                )
+              })}
+            </div>
+          )
+        })
+      }
+    </div>
+  </main>
+</WorkLayout>
+
+<script>
+const imgs:HTMLImageElement[] = Array.from(document.querySelectorAll('.placeHolderImage'))
+const modalImageWrapper: HTMLImageElement = document.querySelector('.modalImageWrapper')!
+const modalImg: HTMLImageElement = document.querySelector('.modalImg')!
+const returnTo = document.querySelector('.returnTo')
+const prev = document.querySelector('.prev')
+const next = document.querySelector('.next')
+let curIndex
+const curImage = document.querySelector('.curImage')
+returnTo!.addEventListener('click', () => {
+  modalImageWrapper.classList.add('hidden')
+  document.body.style.overflow = 'auto'
+  modalImg.src = ''
+})
+modalImageWrapper!.addEventListener('wheel', (e) => {
+  e.preventDefault()
+})
+modalImageWrapper!.addEventListener('touchmove', (e) => {
+  e.preventDefault()
+})
+
+imgs.forEach((i, I) => {
+  i.addEventListener('click', () => {
+    modalImg.src = i.dataset.src!
+    document.body.style.overflow = 'hidden'
+    modalImageWrapper.classList.remove('hidden')
+    curIndex = I
+    curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
+    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+  })
+})
+prev!.addEventListener('click', () => {
+  if (curIndex > 0) {
+    curIndex--
+    modalImg.src = imgs[curIndex].dataset.src!
+    curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
+    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+  } else {
+    curIndex = 0
+    modalImg.src = imgs[curIndex].dataset.src!
+    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+  }
+})
+next!.addEventListener('click', () => {
+  if (curIndex < imgs.length - 1) {
+    curIndex++
+    modalImg.src = imgs[curIndex].dataset.src!
+    curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
+    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+  } else {
+    curIndex = 0
+    modalImg.src = imgs[curIndex].dataset.src!
+    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+    prev!.classList.add('line-through')
+  }
+})
+</script>
