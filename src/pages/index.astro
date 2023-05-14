@@ -8,12 +8,11 @@ const href = import.meta.env.PROD
 const url = `${href}all.json`
 const res = await fetch(url)
 const workList = await res.json()
-
 ---
 
-<GalleryLayout>
+<GalleryLayout title={'Gallery'}>
   <main class="prose slide-in">
-    <p class="font-serif animate-fill-both">Gallery</p>
+    <p class="font-serif font-normal animate-fill-both">Gallery</p>
     <section
       id="workCatalog"
       class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
@@ -23,9 +22,9 @@ const workList = await res.json()
           return (
             <div id="" class="relative">
               <a
-                href="/turpan"
+                href={`/${work.workName.replace(/ /g, '_')}`}
                 id="workName"
-                class=" w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-0 decoration-none backdrop-blur-sm"
+                class=" w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
               >
                 {work.workName}
               </a>
@@ -36,17 +35,16 @@ const workList = await res.json()
           )
         })
       }
+      <div class="bg-black dark:bg-white w-full h-full flex justify-center items-center dark:text-black text-white font-serif">Coming Soon</div>
     </section>
     <section class="flex">
-      <p class="font-serif">
-        <a href="https://ekar.site" class="decoration-none">:: ekar</a>
-      </p>
+     <a href="https://ekar.site" class="decoration-none font-serif font-normal">:: ekar</a>
     </section>
   </main>
 </GalleryLayout>
 
 <style>
   #workCatalog:hover #workName {
-    @apply hover:opacity-100 transition-all ease-in-out transition-all decoration-none;
+    @apply md:hover:opacity-100 md:opacity-0 transition-all ease-in-out transition-all decoration-none;
   }
 </style>
