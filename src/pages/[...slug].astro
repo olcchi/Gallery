@@ -37,24 +37,23 @@ const url = `${href}/${work}.json`
 
 const res = await fetch(url)
 const picList = await res.json()
-console.log(picList);
 
-// const columns = 4
-// function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
-//   const result = new Array(columns).fill(null).map(():any[] => [])
+const columns = 4
+function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
+  const result = new Array(columns).fill(null).map(():any[] => [])
 
-//   photos.forEach((photo, index) => {
-//     const column = index % columns
-//     result[column].push(photo)
-//   })
+  photos.forEach((photo, index) => {
+    const column = index % columns
+    result[column].push(photo)
+  })
 
-//   return result
-// }
-// const photos = splitPhotosIntoColumns(picList, columns)
+  return result
+}
+const photos = splitPhotosIntoColumns(picList, columns)
 ---
 
 <WorkLayout title={route}>
-  <!-- <main class="workWrapper prose">
+  <main class="workWrapper prose">
     <div class="modalImageWrapper hidden">
       <ModalImage />
     </div>
@@ -84,7 +83,7 @@ console.log(picList);
         })
       }
     </div>
-  </main> -->
+  </main>
 </WorkLayout>
 
 <script>
