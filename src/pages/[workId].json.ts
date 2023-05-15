@@ -14,7 +14,6 @@ const workIndex: Record<string, number> = {
   tu: 0,
   un: 1,
   al: 2,
-  // ne: 2,
   all: 3,
 }
 export const get: APIRoute = async({ params }) => {
@@ -33,7 +32,6 @@ export function getStaticPaths() {
     { params: { workId: 'tu' } },
     { params: { workId: 'un' } },
     { params: { workId: 'al' } },
-    // { params: { workId: 'ne' } },
     { params: { workId: 'all' } },
   ]
 }

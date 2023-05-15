@@ -19,11 +19,6 @@ export async function getStaticPaths() {
       work: 'al',
       route: 'Another Landscape',
     },
-    // {
-    //   slug: 'Never_Know_How_Much_I_Love_You',
-    //   work: 'ne',
-    //   route: 'Never Know How Much I Love You',
-    // },
   ]
   return pages.map(({ slug, work, route }) => {
     return {
@@ -42,22 +37,24 @@ const url = `${href}/${work}.json`
 
 const res = await fetch(url)
 const picList = await res.json()
-const columns = 4
-function splitPhotosIntoColumns(photos: string[], columns: number): string[][] {
-  const result = new Array(columns).fill(null).map(():string[] => [])
+console.log(picList);
 
-  photos.forEach((photo, index) => {
-    const column = index % columns
-    result[column].push(photo)
-  })
+// const columns = 4
+// function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
+//   const result = new Array(columns).fill(null).map(():any[] => [])
 
-  return result
-}
-const photos = splitPhotosIntoColumns(picList, columns)
+//   photos.forEach((photo, index) => {
+//     const column = index % columns
+//     result[column].push(photo)
+//   })
+
+//   return result
+// }
+// const photos = splitPhotosIntoColumns(picList, columns)
 ---
 
 <WorkLayout title={route}>
-  <main class="workWrapper prose">
+  <!-- <main class="workWrapper prose">
     <div class="modalImageWrapper hidden">
       <ModalImage />
     </div>
@@ -87,7 +84,7 @@ const photos = splitPhotosIntoColumns(picList, columns)
         })
       }
     </div>
-  </main>
+  </main> -->
 </WorkLayout>
 
 <script>
