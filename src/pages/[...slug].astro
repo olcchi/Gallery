@@ -30,30 +30,30 @@ export async function getStaticPaths() {
 
 const { work, route } = Astro.props
 
-const href = import.meta.env.PROD
-  ? 'https://ekargallery.netlify.app/'
-  : Astro.url.origin
-const url = `${href}/${work}.json`
+  // const href = import.meta.env.PROD
+  //   ? 'https://ekargallery.netlify.app/'
+  //   : Astro.url.origin
+  // const url = `${href}/${work}.json`
 
-const res = await fetch(url)
-const picList = await res.json()
+  // const res = await fetch(url)
+  // const picList = await res.json()
 
-const columns = 4
-function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
-  const result = new Array(columns).fill(null).map(():any[] => [])
+  // const columns = 4
+  // function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
+  //   const result = new Array(columns).fill(null).map(():any[] => [])
 
-  photos.forEach((photo, index) => {
-    const column = index % columns
-    result[column].push(photo)
-  })
+  //   photos.forEach((photo, index) => {
+  //     const column = index % columns
+  //     result[column].push(photo)
+  //   })
 
-  return result
-}
-const photos = splitPhotosIntoColumns(picList, columns)
+//   return result
+// }
+// const photos = splitPhotosIntoColumns(picList, columns)
 ---
 
 <WorkLayout title={route}>
-  <main class="workWrapper prose">
+  <!-- <main class="workWrapper prose">
     <div class="modalImageWrapper hidden">
       <ModalImage />
     </div>
@@ -83,9 +83,9 @@ const photos = splitPhotosIntoColumns(picList, columns)
         })
       }
     </div>
-  </main>
+  </main> -->
 </WorkLayout>
-
+<!--
 <script>
 const imgs:HTMLImageElement[] = Array.from(document.querySelectorAll('.placeHolderImage'))
 const modalImageWrapper: HTMLImageElement = document.querySelector('.modalImageWrapper')!
@@ -142,4 +142,4 @@ next!.addEventListener('click', () => {
     prev!.classList.add('line-through')
   }
 })
-</script>
+</script> -->
