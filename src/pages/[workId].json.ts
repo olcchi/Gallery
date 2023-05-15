@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro'
 const url = 'https://api.vika.cn/fusion/v1/datasheets/dstgK4fhao4Qv6Ztfr/records'
-// const token = `Bearer ${import.meta.env.IMAGE_HOST_TOKEN}`
-const token = 'Bearer uskquTIHJAOZW5Ur5ygvsr0'
+const token = `Bearer ${import.meta.env.IMAGE_HOST_TOKEN}`
 const work = await fetch(url, {
   headers: {
     Authorization: token,
