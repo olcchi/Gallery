@@ -2,16 +2,16 @@
 import GalleryLayout from '@layouts/galleryLayout.astro'
 import Image from '@components/Image.astro'
 
-const href = import.meta.env.PROD
-  ? 'https://ekargallery.netlify.app/'
-  : Astro.request.url
-const url = `${href}all.json`
-const res = await fetch(url)
-const workList = await res.json()
+// const href = import.meta.env.PROD
+//   ? 'https://ekargallery.netlify.app/'
+//   : Astro.request.url
+// const url = `${href}all.json`
+// const res = await fetch(url)
+// const workList = await res.json()
 ---
 
 <GalleryLayout title={'Gallery'}>
-  <main class="prose slide-in">
+  <!-- <main class="prose slide-in">
     <p class="font-serif font-normal animate-fill-both">Gallery</p>
     <section
       id="workCatalog"
@@ -35,12 +35,11 @@ const workList = await res.json()
           )
         })
       }
-      <div class="bg-black dark:bg-white w-full h-full flex justify-center items-center dark:text-black text-white font-serif">Coming Soon</div>
     </section>
     <section class="flex">
      <a href="https://ekar.site" class="decoration-none font-serif font-normal">:: ekar</a>
     </section>
-  </main>
+  </main> -->
 </GalleryLayout>
 
 <style>
