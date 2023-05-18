@@ -1,6 +1,6 @@
 ---
-// import MaskHeader from '@components/header/maskHeader.astro'
-import TabMask from '@components/tabMask.astro'
+import Header from '@components/header.astro'
+import Mask from '@components/mask.astro'
 import '../styles/main.css'
 interface Props {
   title?: string;
@@ -21,10 +21,13 @@ const { title } = Astro.props
   </head>
   <body class="themeBase">
     <main class="grid grid-cols-[1fr_min(65ch,90%)_1fr] relative">
-      <div class="fixed bottom-0 z-30">
-        <TabMask/>
+      <div class="fixed w-full ">
+        <Header/>
       </div>
-      <article class="flex flex-col col-start-2 col-end-3">
+      <div class="fixed bottom-0 z-30">
+        <Mask/>
+      </div>
+      <article class="flex flex-col col-start-2 col-end-3 mt-20">
           <slot />
       </article>
     </main>
