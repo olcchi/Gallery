@@ -7,12 +7,12 @@ export async function getStaticPaths() {
     {
       slug: 'Turpan',
       work: 'tu',
-      route: 'turpan',
+      route: 'Turpan',
     },
     {
       slug: 'Unnoticed',
       work: 'un',
-      route: 'unnoticed',
+      route: 'Unnoticed',
     },
     {
       slug: 'Another_Landscape',
@@ -60,10 +60,10 @@ const photos = splitPhotosIntoColumns(picList, columns)
 
 <WorkLayout title={route}>
   <main class="workWrapper prose">
-    <div class="modalImageWrapper hidden">
+    <div class="modalImageWrapper hidden transition-opacity ease">
       <ModalImage />
     </div>
-      <p class="text-xl font-serif">{route}</p>
+      <!-- <p class="text-xl font-serif">{route}</p> -->
     <div class="grid grid-cols-4 gap-2 mb-25">
       {
         photos.map((l) => {
@@ -71,17 +71,17 @@ const photos = splitPhotosIntoColumns(picList, columns)
             <div class="w-full flex flex-col gap-2">
               {l.map((p:any) => {
                 return (
-                  <Image
-                    class="placeHolderImage w-full cursor-pointer"
-                    width={200}
-                    aspectRatio={'origin'}
-                    data-src={p.url}
-                    src={p.url}
-                    format={'webp'}
-                    loading={'lazy'}
-                    quality={100}
-                    alt="Image"
-                  />
+                    <Image
+                      class="flowImage w-full cursor-pointer transition-opacity ease duration-500"
+                      width={200}
+                      aspectRatio={'origin'}
+                      data-src={p.url}
+                      src={p.url}
+                      format={'webp'}
+                      loading={'lazy'}
+                      quality={100}
+                      alt="Image"
+                    />
                 )
               })}
             </div>
@@ -93,14 +93,14 @@ const photos = splitPhotosIntoColumns(picList, columns)
 </WorkLayout>
 
 <script>
-const imgs:HTMLImageElement[] = Array.from(document.querySelectorAll('.placeHolderImage'))
+const imgs:HTMLImageElement[] = Array.from(document.querySelectorAll('.flowImage'))
 const modalImageWrapper: HTMLImageElement = document.querySelector('.modalImageWrapper')!
 const modalImg: HTMLImageElement = document.querySelector('.modalImg')!
 const returnTo = document.querySelector('.returnTo')
 const prev = document.querySelector('.prev')
 const next = document.querySelector('.next')
-let curIndex
 const curImage = document.querySelector('.curImage')
+let curIndex
 returnTo!.addEventListener('click', () => {
   modalImageWrapper.classList.add('hidden')
   document.body.style.overflow = 'auto'
@@ -113,39 +113,52 @@ modalImageWrapper!.addEventListener('touchmove', (e) => {
   e.preventDefault()
 })
 
-imgs.forEach((i, I) => {
-  i.addEventListener('click', () => {
-    modalImg.src = i.dataset.src!
-    document.body.style.overflow = 'hidden'
+imgs.forEach((img, I) => {
+  img.classList.add('opacity-0')
+  const _img = new Image()
+  _img.src = img.src
+  _img.onload = () => {
+    img.classList.remove('opacity-0')
+  }
+
+  img.addEventListener('click', () => {
+    modalImg.src = img.dataset.src!
     modalImageWrapper.classList.remove('hidden')
+    document.body.style.overflow = 'hidden'
     curIndex = I
     curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   })
 })
-prev!.addEventListener('click', () => {
-  if (curIndex > 0) {
-    curIndex--
-    modalImg.src = imgs[curIndex].dataset.src!
+const imageController = (direction:'prev'|'next') => {
+  if (direction === 'prev' ? curIndex > 0 : curIndex < imgs.length - 1) {
+    modalImg.classList.add('opacity-0')
+    direction === 'prev' ? curIndex-- : curIndex++
+    setTimeout(() => {
+      modalImg.src = imgs[curIndex].dataset.src!
+    }, 100)
     curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
+    modalImg.onload = () => {
+      modalImg.classList.remove('opacity-0')
+    }
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   } else {
+    modalImg.classList.add('opacity-0')
     curIndex = 0
-    modalImg.src = imgs[curIndex].dataset.src!
+    setTimeout(() => {
+      modalImg.src = imgs[curIndex].dataset.src!
+    }, 100)
+    modalImg.onload = () => {
+      modalImg.classList.remove('opacity-0')
+    }
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   }
+}
+
+prev!.addEventListener('click', () => {
+  imageController('prev')
 })
 next!.addEventListener('click', () => {
-  if (curIndex < imgs.length - 1) {
-    curIndex++
-    modalImg.src = imgs[curIndex].dataset.src!
-    curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
-    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
-  } else {
-    curIndex = 0
-    modalImg.src = imgs[curIndex].dataset.src!
-    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
-    prev!.classList.add('line-through')
-  }
+  imageController('next')
 })
 </script>
