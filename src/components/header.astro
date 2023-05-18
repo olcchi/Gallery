@@ -1,0 +1,77 @@
+---
+const pages = [
+  {
+    slug: 'Turpan',
+    work: 'tu',
+    route: 'Turpan',
+  },
+  {
+    slug: 'Unnoticed',
+    work: 'un',
+    route: 'Unnoticed',
+  },
+  {
+    slug: 'Another_Landscape',
+    work: 'al',
+    route: 'Another Landscape',
+  },
+  {
+    slug: 'Never_Know_How_Much_I_Love_You',
+    work: 'ne',
+    route: 'Never Know How Much I Love You',
+  },
+];
+---
+
+<div
+  class="header flex w-full justify-center gap-4 p-5 font-serif italic md:text-base text-xs"
+>
+  {
+    pages.map((p) => {
+      return (
+        <a
+          href={p.slug}
+          class:list={[
+            'p-2',
+            'tabItem',
+            'z-20',
+            {
+              'opacity-10 hover:opacity-50':
+                `/${p.slug}` !== Astro.url.pathname,
+            },
+          ]}
+        >
+          {p.route}
+        </a>
+      )
+    })
+  }
+</div>
+<script>
+// const header = document.querySelector('.header')!
+// let currentYPostion
+// let isDown
+// const dynamicNav = () => {
+//   header.classList.toggle('opacity-0', isDown)
+//   header.classList.toggle('opacity-100', !isDown)
+// }
+// window.addEventListener('scroll', () => {
+//   currentYPostion = window.scrollY
+//   isDown = currentYPostion > 20
+//   dynamicNav()
+// })
+</script>
+<style>
+  .header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    -webkit-mask-image: linear-gradient(black, transparent);
+    mask-image: linear-gradient(to bottom, black, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+</style>
