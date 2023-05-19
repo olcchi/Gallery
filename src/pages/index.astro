@@ -24,11 +24,11 @@ const workList = await res.json()
               <a
                 href={`/${work.workName.replace(/ /g, '_')}`}
                 id="workName"
-                class=" w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
+                class=" text-white w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
               >
                 {work.workName}
               </a>
-              <div class="relative">
+              <div class="relative opacity-90 md:opacity-100">
             <Image coverUrl={work.coverImage[0].url} placeholderUrl={work.placeHolderImage[0].url} />
               </div>
             </div>
@@ -38,6 +38,7 @@ const workList = await res.json()
     </section>
     <p>
       <a href="https://ekar.site" class="decoration-none  animate-fill-both font-serif font-normal">:: ekar</a>
+      <a href="mailto:Earthb0y@outlook.com" class="decoration-none  animate-fill-both font-serif font-normal">- email</a>
       </p>
   </main>
 </GalleryLayout>
