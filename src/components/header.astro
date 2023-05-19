@@ -26,6 +26,7 @@ const pages = [
 <div
   class="header flex items-center  w-full md:justify-center justify-between gap-4 p-5 font-serif italic transition-opacity ease"
 >
+{Astro.url.pathname}
   {
     pages.map((p) => {
       return (
