@@ -26,7 +26,6 @@ const pages = [
 <div
   class="header flex items-center  w-full md:justify-center justify-between gap-4 p-5 font-serif italic transition-opacity ease"
 >
-{Astro.url.pathname}
   {
     pages.map((p) => {
       return (
@@ -38,7 +37,7 @@ const pages = [
             'z-20',
             {
               'hidden md:block md:opacity-10 md:hover:opacity-50':
-                `/${p.slug}` !== Astro.url.pathname,
+                !Astro.url.pathname.includes(p.slug),
             },
           ]}
         >
