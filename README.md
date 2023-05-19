@@ -1,4 +1,7 @@
 ###  ***[gallery.ekar.site](https://gallery.ekar.site)***
+My personal gallery
+### ***Usage***  
+Refer to [ekar.site](https://github.com/Ekarmore/ekar.site)
 
 ### ***LICENSE***
  The website source code follows the [MIT](./LICENSE) license,  
