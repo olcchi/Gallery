@@ -125,7 +125,7 @@ imgs.forEach((img, I) => {
     modalImageWrapper.classList.remove('hidden')
     document.body.style.overflow = 'hidden'
     curIndex = I
-    curIndex === 0 ? prev!.classList.add('opacity-20') : prev!.classList.remove('opacity-20')
+    curIndex === 0 ? prev!.classList.add('disabled') : prev!.classList.remove('disabled')
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   })
 })
@@ -136,7 +136,7 @@ const imageController = (direction:'prev'|'next') => {
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
     }, 100)
-    curIndex === 0 ? prev!.classList.add('opacity-20') : prev!.classList.remove('opacity-20')
+    curIndex === 0 ? prev!.classList.add('disabled') : prev!.classList.remove('disabled')
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
     }
@@ -161,3 +161,9 @@ next!.addEventListener('click', () => {
   imageController('next')
 })
 </script>
+
+<style is:global>
+.prev.disabled{
+  @apply line-through!
+}
+</style>
