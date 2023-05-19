@@ -64,7 +64,7 @@ const pages = [
             'font-serif',
             {
               'opacity-10 hover:opacity-50':
-                `/${p.slug}` !== Astro.url.pathname,
+              !Astro.url.pathname.includes(p.slug),
             },
           ]}
         >
