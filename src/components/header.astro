@@ -46,7 +46,7 @@ const pages = [
       )
     })
   }
-  <div class="catalogToggle md:hidden relative w-5 h-4 transition-all ease">
+  <div class="catalogToggle md:hidden relative w-5 h-4">
     <span class="stroke"/>
     <span class="stroke"/>
     <span class="stroke"/>
@@ -60,7 +60,6 @@ const pages = [
           href={`/${p.slug}`}
           class:list={[
             'p-2',
-            'tabItem',
             'font-serif',
             {
               'opacity-10 hover:opacity-50':
@@ -80,6 +79,7 @@ const pages = [
 <script>
 const catalogToggle = document.querySelector('.catalogToggle')
 const catalog = document.querySelector('.catalog')
+const tabItems = document.querySelectorAll('.tabItem')
 let catalogOpen = false
 catalog!.addEventListener('wheel', (e) => {
   if (catalogOpen)
@@ -92,6 +92,9 @@ catalog!.addEventListener('scroll', (e) => {
 catalogToggle!.addEventListener('click', () => {
   catalogToggle!.classList.toggle('open')
   catalog!.classList.toggle('open')
+  tabItems.forEach((i) => {
+    i!.classList.toggle('opacity-0')
+  })
   catalogOpen = !catalogOpen
 })
 const header = document.querySelector('.header')!
@@ -122,7 +125,7 @@ window.addEventListener('scroll', () => {
   @apply top-4
 }
 .catalogToggle span{
-  @apply absolute transition-all ease
+  @apply absolute
 }
 .catalogToggle.open span:nth-child(1){
   @apply top-2 rotate-45
@@ -134,7 +137,7 @@ window.addEventListener('scroll', () => {
   @apply top-2 -rotate-45
 }
 .catalog{
-  @apply -translate-y-20 hidden opacity-0 bg-white fixed dark:bg-black transition-all ease-in-out
+  @apply -translate-y-20 hidden opacity-0 bg-white fixed dark:bg-black
 }
 .catalog.open{
   @apply opacity-100 translate-y-0 flex flex-col items-center p-5 w-full h-full md:hidden
