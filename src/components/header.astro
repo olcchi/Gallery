@@ -24,17 +24,44 @@ const pages = [
 ---
 
 <div
-  class="header flex w-full justify-center gap-4 p-5 font-serif italic md:text-base text-xs"
+  class="header flex items-center  w-full md:justify-center justify-between gap-4 p-5 font-serif italic transition-opacity ease"
 >
   {
     pages.map((p) => {
       return (
         <a
-          href={p.slug}
+          href={`/${p.slug}`}
           class:list={[
             'p-2',
             'tabItem',
             'z-20',
+            {
+              'hidden md:block md:opacity-10 md:hover:opacity-50':
+                `/${p.slug}` !== Astro.url.pathname,
+            },
+          ]}
+        >
+          {p.route}
+        </a>
+      )
+    })
+  }
+  <div class="catalogToggle md:hidden relative w-5 h-4 transition-all ease">
+    <span class="stroke"/>
+    <span class="stroke"/>
+    <span class="stroke"/>
+  </div>
+</div>
+<div class="catalog">
+  {
+    pages.map((p) => {
+      return (
+        <a
+          href={`/${p.slug}`}
+          class:list={[
+            'p-2',
+            'tabItem',
+            'font-serif',
             {
               'opacity-10 hover:opacity-50':
                 `/${p.slug}` !== Astro.url.pathname,
@@ -47,31 +74,69 @@ const pages = [
     })
   }
 </div>
+<div>
+
+</div>
 <script>
-// const header = document.querySelector('.header')!
-// let currentYPostion
-// let isDown
-// const dynamicNav = () => {
-//   header.classList.toggle('opacity-0', isDown)
-//   header.classList.toggle('opacity-100', !isDown)
-// }
-// window.addEventListener('scroll', () => {
-//   currentYPostion = window.scrollY
-//   isDown = currentYPostion > 20
-//   dynamicNav()
-// })
+const catalogToggle = document.querySelector('.catalogToggle')
+const catalog = document.querySelector('.catalog')
+let catalogOpen = false
+catalog!.addEventListener('wheel', (e) => {
+  if (catalogOpen)
+    e.preventDefault()
+})
+catalog!.addEventListener('scroll', (e) => {
+  if (catalogOpen)
+    e.preventDefault()
+})
+catalogToggle!.addEventListener('click', () => {
+  catalogToggle!.classList.toggle('open')
+  catalog!.classList.toggle('open')
+  catalogOpen = !catalogOpen
+})
+const header = document.querySelector('.header')!
+let currentYPostion
+let isDown
+const dynamicNav = () => {
+  header.classList.toggle('opacity-0', isDown)
+  header.classList.toggle('opacity-100', !isDown)
+}
+window.addEventListener('scroll', () => {
+  currentYPostion = window.scrollY
+  isDown = currentYPostion > 20
+  dynamicNav()
+})
 </script>
-<style>
-  .header::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px;
-    -webkit-mask-image: linear-gradient(black, transparent);
-    mask-image: linear-gradient(to bottom, black, transparent);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
+
+<style is:global>
+.stroke{
+  @apply h-0.5 w-5 bg-black dark:bg-white
+}
+.catalogToggle span:nth-child(1){
+  @apply top-0
+}
+.catalogToggle span:nth-child(2){
+  @apply top-2
+}
+.catalogToggle span:nth-child(3){
+  @apply top-4
+}
+.catalogToggle span{
+  @apply absolute transition-all ease
+}
+.catalogToggle.open span:nth-child(1){
+  @apply top-2 rotate-45
+}
+.catalogToggle.open span:nth-child(2){
+  @apply top-2 translate-x-1 opacity-0
+}
+.catalogToggle.open span:nth-child(3){
+  @apply top-2 -rotate-45
+}
+.catalog{
+  @apply -translate-y-20 hidden opacity-0 bg-white fixed dark:bg-black transition-all ease-in-out
+}
+.catalog.open{
+  @apply opacity-100 translate-y-0 flex flex-col items-center p-5 w-full h-full md:hidden
+}
 </style>
