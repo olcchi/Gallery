@@ -125,7 +125,7 @@ imgs.forEach((img, I) => {
     modalImageWrapper.classList.remove('hidden')
     document.body.style.overflow = 'hidden'
     curIndex = I
-    curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
+    curIndex === 0 ? prev!.classList.add('opacity-20') : prev!.classList.remove('opacity-20')
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   })
 })
@@ -136,7 +136,7 @@ const imageController = (direction:'prev'|'next') => {
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
     }, 100)
-    curIndex === 0 ? prev!.classList.add('line-through') : prev!.classList.remove('line-through')
+    curIndex === 0 ? prev!.classList.add('opacity-20') : prev!.classList.remove('opacity-20')
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
     }
