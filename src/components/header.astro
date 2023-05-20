@@ -89,13 +89,26 @@ catalog!.addEventListener('scroll', (e) => {
   if (catalogOpen)
     e.preventDefault()
 })
-catalogToggle!.addEventListener('click', () => {
+const toggleCatlog = () => {
   catalogToggle!.classList.toggle('open')
   catalog!.classList.toggle('open')
   tabItems.forEach((i) => {
     i!.classList.toggle('opacity-0')
   })
   catalogOpen = !catalogOpen
+}
+catalogToggle!.addEventListener('click', toggleCatlog)
+const md = 768
+window.addEventListener('resize', () => {
+  const curWidth = window.innerWidth
+  if (curWidth > md) {
+    catalogToggle!.classList.remove('open')
+    catalog!.classList.remove('open')
+    tabItems.forEach((i) => {
+      i!.classList.remove('opacity-0')
+    })
+    catalogOpen = !catalogOpen
+  }
 })
 const header = document.querySelector('.header')!
 let currentYPostion
