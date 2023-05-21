@@ -12,7 +12,7 @@ const workList = await res.json()
 
 <GalleryLayout title={'Gallery - ekar'}>
   <main class="prose slide-in">
-    <p class="font-serif font-normal animate-fill-both">Gallery</p>
+    <p class="font-sans font-thin italic animate-fill-both">Gallery</p>
     <section
       id="workCatalog"
       class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
@@ -24,7 +24,7 @@ const workList = await res.json()
               <a
                 href={`/${work.workName.replace(/ /g, '_')}`}
                 id="workName"
-                class=" text-white w-full h-full absolute flex flex-col items-center justify-center text-sm font-serif z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
+                class=" text-white w-full h-full absolute flex flex-col items-center justify-center text-sm font-sans font-thin italic z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
               >
                 {work.workName}
               </a>
@@ -37,7 +37,7 @@ const workList = await res.json()
       }
     </section>
     <p class="footerLink">
-      <a href="https://ekar.site" class="">ekar</a>
+      <a href="https://ekar.site" class="">Ekar</a>
       <a href="mailto:Earthb0y@outlook.com" class=""> Contact</a>
       </p>
   </main>
@@ -48,7 +48,7 @@ const workList = await res.json()
     @apply md:hover:opacity-100 md:opacity-0 transition-all ease-in-out transition-all decoration-none;
   }
   .footerLink a{
-    @apply decoration-none  animate-fill-both font-serif font-normal hover:opacity-50
+    @apply decoration-none  animate-fill-both font-sans font-thin italic hover:opacity-50
   }
   /* .footerLink a:nth-child(1)::before{
     content:':: '

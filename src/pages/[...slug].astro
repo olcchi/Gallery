@@ -99,11 +99,15 @@ const returnTo = document.querySelector('.returnTo')
 const prev = document.querySelector('.prev')
 const next = document.querySelector('.next')
 const curImage = document.querySelector('.curImage')
+// const loading = document.querySelector('.loading')
 let curIndex
 returnTo!.addEventListener('click', () => {
   modalImageWrapper.classList.add('hidden')
   document.body.style.overflow = 'auto'
   modalImg.src = ''
+})
+modalImageWrapper!.addEventListener('scroll', (e) => {
+  e.preventDefault()
 })
 modalImageWrapper!.addEventListener('wheel', (e) => {
   e.preventDefault()
@@ -132,6 +136,8 @@ imgs.forEach((img, I) => {
 const imageController = (direction:'prev'|'next') => {
   if (direction === 'prev' ? curIndex > 0 : curIndex < imgs.length - 1) {
     modalImg.classList.add('opacity-0')
+    // modalImg.classList.add('hidden')
+    // loading!.classList.remove('hidden')
     direction === 'prev' ? curIndex-- : curIndex++
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
@@ -139,16 +145,22 @@ const imageController = (direction:'prev'|'next') => {
     curIndex === 0 ? prev!.classList.add('disabled') : prev!.classList.remove('disabled')
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
+      // modalImg.classList.remove('hidden')
+      // loading!.classList.add('hidden')
     }
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   } else {
     modalImg.classList.add('opacity-0')
+    // modalImg.classList.add('hidden')
+    // loading!.classList.remove('hidden')
     curIndex = 0
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
     }, 100)
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
+      // modalImg.classList.remove('hidden')
+      // loading!.classList.add('hidden')
     }
     curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
   }
