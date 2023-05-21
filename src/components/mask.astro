@@ -1,40 +1,7 @@
----
+<div class="maskTabBottom w-screen p-4"></div>
+<div class="maskTabTop w-screen p-4"></div>
 
----
-<div class="maskTabBottom w-screen p-4">
-  <div class="tab opacity-0 transition-opacity ease"/>
-  </div>
-  <div class="maskTabTop w-screen p-4">
-    <div class="tab opacity-0 transition-opacity ease"/>
-    </div>
-<script>
-const tab = document.querySelector('.tab')!
-function checkIfAtBottom() {
-  const scrollPosition = window.innerHeight + window.pageYOffset
-  const pageHeight = document.documentElement.scrollHeight
-  Math.ceil(scrollPosition) < pageHeight
-    ? (() => {
-        tab.classList.remove('opacity-100')
-        tab.classList.add('opacity-0')
-      })()
-    : (() => {
-        tab.classList.remove('opacity-0')
-        tab.classList.add('opacity-100')
-      })()
-}
-window!.onload = () => {
-  checkIfAtBottom()
-}
-window.addEventListener('scroll', () => {
-  checkIfAtBottom()
-})
-
-window.addEventListener('resize', () => {
-  checkIfAtBottom()
-})
-</script>
-
-  <style>
+<style>
   .maskTabBottom::before {
     content: "";
     position: absolute;
@@ -42,8 +9,8 @@ window.addEventListener('resize', () => {
     left: 0;
     width: 100%;
     height: 80px;
-    -webkit-mask-image: linear-gradient(transparent,black);
-    mask-image: linear-gradient(to bottom, transparent,black);
+    -webkit-mask-image: linear-gradient(transparent, black);
+    mask-image: linear-gradient(to bottom, transparent, black);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
@@ -54,9 +21,9 @@ window.addEventListener('resize', () => {
     left: 0;
     width: 100%;
     height: 80px;
-    -webkit-mask-image: linear-gradient(black,transparent);
-    mask-image: linear-gradient(to bottom, black,transparent);
+    -webkit-mask-image: linear-gradient(black, transparent);
+    mask-image: linear-gradient(to bottom, black, transparent);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-  </style>
+</style>
