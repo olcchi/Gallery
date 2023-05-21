@@ -36,7 +36,7 @@ const pages = [
             'tabItem',
             'z-20',
             {
-              'hidden md:block md:opacity-10 md:hover:opacity-50':
+              'hidden md:block md:opacity-30 md:hover:opacity-50':
                 !Astro.url.pathname.includes(p.slug),
             },
           ]}
@@ -63,7 +63,7 @@ const pages = [
             'p-2',
             'font-serif',
             {
-              'opacity-10 hover:opacity-50':
+              'opacity-30 hover:opacity-50':
               !Astro.url.pathname.includes(p.slug),
             },
           ]}
