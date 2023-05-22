@@ -7,7 +7,7 @@ const href = import.meta.env.PROD
   : Astro.request.url
 const url = `${href}all.json`
 const res = await fetch(url)
-const workList = await res.json()
+const workList = await res.json();
 ---
 
 <GalleryLayout title={'Gallery - ekar'}>
@@ -29,7 +29,10 @@ const workList = await res.json()
                 {work.workName}
               </a>
               <div class="relative opacity-90 md:opacity-100">
-            <Image coverUrl={work.coverImage[0].url} placeholderUrl={work.placeHolderImage[0].url} />
+                <Image
+                  coverUrl={work.coverImage[0].url}
+                  placeholderUrl={work.placeHolderImage[0].url}
+                />
               </div>
             </div>
           )
@@ -38,8 +41,8 @@ const workList = await res.json()
     </section>
     <p class="footerLink">
       <a href="https://ekar.site" class="">Ekar</a>
-      <a href="mailto:Earthb0y@outlook.com" class=""> Contact</a>
-      </p>
+      <a href="mailto:Earthb0y@outlook.com" class="">Contact</a>
+    </p>
   </main>
 </GalleryLayout>
 
@@ -47,13 +50,10 @@ const workList = await res.json()
   #workCatalog:hover #workName {
     @apply md:hover:opacity-100 md:opacity-0 transition-all ease-in-out transition-all decoration-none;
   }
-  .footerLink a{
-    @apply decoration-none  animate-fill-both font-sans font-thin italic hover:opacity-50
+  .footerLink a {
+    @apply decoration-none  animate-fill-both font-sans font-thin italic hover:opacity-50;
   }
-  /* .footerLink a:nth-child(1)::before{
-    content:':: '
-  } */
-  .footerLink a:nth-child(2)::before{
-    content:'· '
+  .footerLink a:nth-child(2)::before {
+    content: "· ";
   }
 </style>
