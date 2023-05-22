@@ -42,10 +42,9 @@ const url = `${href}/${work}.json`
 
 const res = await fetch(url)
 const picList = await res.json()
-
 const columns = 4
 function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
-  const result = new Array(columns).fill(null).map(():any[] => [])
+  const result = new Array(columns).fill(null).map((): any[] => [])
 
   photos.forEach((photo, index) => {
     const column = index % columns
@@ -55,7 +54,6 @@ function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
   return result
 }
 const photos = splitPhotosIntoColumns(picList, columns)
-
 ---
 
 <WorkLayout title={route}>
@@ -68,19 +66,19 @@ const photos = splitPhotosIntoColumns(picList, columns)
         photos.map((l) => {
           return (
             <div class="w-full flex flex-col gap-2">
-              {l.map((p:any) => {
+              {l.map((p: any) => {
                 return (
-                    <Image
-                      class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
-                      width={240}
-                      aspectRatio={'origin'}
-                      data-src={p.url}
-                      src={p.url}
-                      format={'webp'}
-                      loading={'lazy'}
-                      quality={100}
-                      alt="Image"
-                    />
+                  <Image
+                    class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
+                    width={240}
+                    aspectRatio={'origin'}
+                    data-src={p.url}
+                    src={p.url}
+                    format={'webp'}
+                    loading={'lazy'}
+                    quality={100}
+                    alt="Image"
+                  />
                 )
               })}
             </div>
@@ -92,22 +90,21 @@ const photos = splitPhotosIntoColumns(picList, columns)
 </WorkLayout>
 
 <script>
-const imgs:HTMLImageElement[] = Array.from(document.querySelectorAll('.flowImage'))
-const modalImageWrapper: HTMLImageElement = document.querySelector('.modalImageWrapper')!
+const imgs: HTMLImageElement[] = Array.from(
+  document.querySelectorAll('.flowImage'),
+)!
+const modalImageWrapper: HTMLImageElement
+  = document.querySelector('.modalImageWrapper')!
 const modalImg: HTMLImageElement = document.querySelector('.modalImg')!
-const returnTo = document.querySelector('.returnTo')
-const prev = document.querySelector('.prev')
-const next = document.querySelector('.next')
-const curImage = document.querySelector('.curImage')
-// const loading = document.querySelector('.loading')
+const returnTo = document.querySelector('.returnTo')!
+const prev = document.querySelector('.prev')!
+const next = document.querySelector('.next')!
+const curImage = document.querySelector('.curImage')!
 let curIndex
-returnTo!.addEventListener('click', () => {
+returnTo.addEventListener('click', () => {
   modalImageWrapper.classList.add('hidden')
   document.body.style.overflow = 'auto'
   modalImg.src = ''
-})
-modalImageWrapper!.addEventListener('scroll', (e) => {
-  e.preventDefault()
 })
 modalImageWrapper!.addEventListener('wheel', (e) => {
   e.preventDefault()
@@ -115,67 +112,61 @@ modalImageWrapper!.addEventListener('wheel', (e) => {
 modalImageWrapper!.addEventListener('touchmove', (e) => {
   e.preventDefault()
 })
-
 imgs.forEach((img, I) => {
-  img.classList.add('opacity-0')
-  const _img = new Image()
-  _img.src = img.src
-  _img.onload = () => {
-    img.classList.remove('opacity-0')
-  }
+    img!.classList.add('opacity-0')
+    const _img = new Image()
+    _img.src = img.src
+    _img.onload = () => {
+      img!.classList.remove('opacity-0')
+    }
 
-  img.addEventListener('click', () => {
-    modalImg.src = img.dataset.src!
-    modalImageWrapper.classList.remove('hidden')
-    document.body.style.overflow = 'hidden'
-    curIndex = I
-    curIndex === 0 ? prev!.classList.add('disabled') : prev!.classList.remove('disabled')
-    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
-  })
+    img!.addEventListener('click', () => {
+      modalImg.src = img.dataset.src!
+      modalImageWrapper.classList.remove('hidden')
+      document.body.style.overflow = 'hidden'
+      curIndex = I
+      curIndex === 0
+        ? prev.classList.add('disabled')
+        : prev.classList.remove('disabled')
+      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
+    })
 })
-const imageController = (direction:'prev'|'next') => {
+const imageController = (direction: 'prev' | 'next') => {
   if (direction === 'prev' ? curIndex > 0 : curIndex < imgs.length - 1) {
     modalImg.classList.add('opacity-0')
-    // modalImg.classList.add('hidden')
-    // loading!.classList.remove('hidden')
     direction === 'prev' ? curIndex-- : curIndex++
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
     }, 100)
-    curIndex === 0 ? prev!.classList.add('disabled') : prev!.classList.remove('disabled')
+    curIndex === 0
+      ? prev.classList.add('disabled')
+      : prev.classList.remove('disabled')
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
-      // modalImg.classList.remove('hidden')
-      // loading!.classList.add('hidden')
     }
-    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+    curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
   } else {
     modalImg.classList.add('opacity-0')
-    // modalImg.classList.add('hidden')
-    // loading!.classList.remove('hidden')
     curIndex = 0
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
     }, 100)
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
-      // modalImg.classList.remove('hidden')
-      // loading!.classList.add('hidden')
     }
-    curImage!.innerHTML = `${curIndex + 1} of ${imgs.length}`
+    curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
   }
 }
-
-prev!.addEventListener('click', () => {
+prev.addEventListener('click', () => {
   imageController('prev')
 })
-next!.addEventListener('click', () => {
+next.addEventListener('click', () => {
   imageController('next')
 })
 </script>
 
 <style is:global>
-.prev.disabled{
-  @apply line-through!
-}
+  .prev.disabled {
+    @apply line-through!;
+  }
 </style>

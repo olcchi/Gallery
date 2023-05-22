@@ -79,9 +79,10 @@ const pages = [
 
 </div>
 <script>
-const catalogToggle = document.querySelector('.catalogToggle')
-const catalog = document.querySelector('.catalog')
-const tabItems = document.querySelectorAll('.tabItem')
+const catalogToggle = document.querySelector('.catalogToggle')!
+const catalog = document.querySelector('.catalog')!
+const tabItems = document.querySelectorAll('.tabItem')!
+const header = document.querySelector('.header')!
 let catalogOpen = false
 catalog!.addEventListener('touchmove', (e) => {
   if (catalogOpen)
@@ -104,20 +105,19 @@ const md = 768
 window.addEventListener('resize', () => {
   const curWidth = window.innerWidth
   if (curWidth > md) {
-    catalogToggle!.classList.remove('open')
-    catalog!.classList.remove('open')
+    catalogToggle.classList.remove('open')
+    catalog.classList.remove('open')
     tabItems.forEach((i) => {
       i!.classList.remove('opacity-0')
     })
     catalogOpen = !catalogOpen
   }
 })
-const header = document.querySelector('.header')!
+
 let currentYPostion
 let isDown
 const dynamicNav = () => {
   header.classList.toggle('opacity-0', isDown)
-  header.classList.toggle('opacity-100', !isDown)
 }
 window.addEventListener('scroll', () => {
   currentYPostion = window.scrollY
