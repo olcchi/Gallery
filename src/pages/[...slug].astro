@@ -2,6 +2,7 @@
 import { Image } from '@astrojs/image/components'
 import WorkLayout from '@layouts/workLayout.astro'
 import ModalImage from '@components/modalImage.astro'
+import { getWorks } from '../scripts/_getWorks'
 export async function getStaticPaths() {
   const pages = [
     {
@@ -35,13 +36,8 @@ export async function getStaticPaths() {
 
 const { work, route } = Astro.props
 
-const href = import.meta.env.PROD
-  ? 'https://ekargallery.netlify.app/'
-  : Astro.url.origin
-const url = `${href}/${work}.json`
-
-const res = await fetch(url)
-const picList = await res.json()
+const _href = Astro.url.origin
+const picList = await getWorks(work, _href)
 
 const columns = 4
 function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {

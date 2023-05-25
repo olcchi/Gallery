@@ -1,13 +1,9 @@
 ---
 import GalleryLayout from '@layouts/galleryLayout.astro'
 import Image from '@components/Image.astro'
-
-const href = import.meta.env.PROD
-  ? 'https://ekargallery.netlify.app/'
-  : Astro.request.url
-const url = `${href}all.json`
-const res = await fetch(url)
-const workList = await res.json();
+import { getWorks } from '../scripts/_getWorks'
+const _href = Astro.request.url
+const workList = await getWorks('all', _href)
 ---
 
 <GalleryLayout title={'Gallery - ekar'}>
