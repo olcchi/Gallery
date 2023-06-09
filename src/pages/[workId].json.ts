@@ -12,7 +12,7 @@ const workRecords = workData.data.records.map(i => i.fields)
 const workIndex: Record<string, number> = {
   tu: 0,
   un: 1,
-  // al: 2,
+  al: 2,
   ne: 3,
   all: 4,
 }
