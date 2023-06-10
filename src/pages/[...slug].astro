@@ -34,26 +34,26 @@ export async function getStaticPaths() {
   })
 }
 
-const { work, route } = Astro.props
+// const { work, route } = Astro.props
 
-const _href = Astro.url.origin
-const picList = await getWorks(work, _href)
+// const _href = Astro.url.origin
+// const picList = await getWorks(work, _href)
 
-const columns = 4
-function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
-  const result = new Array(columns).fill(null).map((): any[] => [])
+// const columns = 4
+// function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
+//   const result = new Array(columns).fill(null).map((): any[] => [])
 
-  photos.forEach((photo, index) => {
-    const column = index % columns
-    result[column].push(photo)
-  })
+//   photos.forEach((photo, index) => {
+//     const column = index % columns
+//     result[column].push(photo)
+//   })
 
-  return result
-}
-const photos = splitPhotosIntoColumns(picList, columns)
+//   return result
+// }
+// const photos = splitPhotosIntoColumns(picList, columns)
 ---
 
-<WorkLayout title={route}>
+<!-- <WorkLayout title={route}>
   <main class="workWrapper prose">
     <div class="modalImageWrapper hidden transition-opacity ease">
       <ModalImage />
@@ -84,9 +84,9 @@ const photos = splitPhotosIntoColumns(picList, columns)
       }
     </div>
   </main>
-</WorkLayout>
+</WorkLayout> -->
 
-<script>
+<!-- <script>
 const imgs: HTMLImageElement[] = Array.from(
   document.querySelectorAll('.flowImage'),
 )!
@@ -160,7 +160,7 @@ prev.addEventListener('click', () => {
 next.addEventListener('click', () => {
   imageController('next')
 })
-</script>
+</script> -->
 
 <style is:global>
   .prev.disabled {
