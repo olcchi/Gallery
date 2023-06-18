@@ -4,6 +4,7 @@ import Image from '@components/Image.astro'
 import { getWorks } from '../scripts/_getWorks'
 const _href = Astro.request.url
 const workList = await getWorks('all', _href)
+const sliceWorkList = workList.slice(0, 3)
 ---
 
 <GalleryLayout title={'Gallery - ekar'}>
@@ -14,7 +15,7 @@ const workList = await getWorks('all', _href)
       class="font-sans grid md:grid-cols-2 gap-2 place-items-center"
     >
       {
-        workList.map((work) => {
+        sliceWorkList.map((work) => {
           return (
             <div id="" class="relative">
               <a
