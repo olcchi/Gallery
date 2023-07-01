@@ -17,7 +17,7 @@ const sliceWorkList = workList.slice(0, 3)
       {
         sliceWorkList.map((work) => {
           return (
-            <div id="" class="relative">
+            <div id="" class="relative hfull wfull">
               <a
                 href={`/${work.workName.replace(/ /g, '_')}`}
                 id="workName"
@@ -35,6 +35,16 @@ const sliceWorkList = workList.slice(0, 3)
           )
         })
       }
+        <div id="" class="relative w273.15px h273.15px">
+          <a
+            id="workName"
+            class=" text-white w-full h-full absolute flex flex-col items-center justify-center text-sm font-sans font-thin italic z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
+          >
+           Be coming
+          </a>
+          <div class="w-full h-full relative opacity-90 md:opacity-100 bg-black">
+          </div>
+        </div>
     </section>
     <p class="footerLink">
       <a href="https://ekar.site" class="">Ekar</a>
