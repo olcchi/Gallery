@@ -24,8 +24,16 @@ const pages = [
 ---
 
 <div
-  class="header flex items-center  w-full md:justify-center justify-between gap-4 p-5 font-sans font-thin italic transition-opacity ease"
+  class="header flex items-center md:grid md:grid-cols-8 md:min-w-65ch md:max-w-65ch mx-auto  w-full md:justify-center justify-between gap-4 p-5 font-sans font-thin italic transition-opacity ease"
 >
+<!-- <a class="i-mdi-chevron-left text-xl hidden md:block opacity-30 hover:opacity-100 col-span-2" href="/"/> -->
+<a class="hidden! md:block! opacity-30 hover:opacity-100 col-span-2 w-min flex justify-center" href="/">
+  <div class=" flex justify-center items-center">
+    <i class="i-mdi-chevron-left inline-block"/>
+    <p class="inline-block text-sm">Catalog</p>
+  </div>
+</a>
+<div class="flex items-center justify-center col-span-4">
   {
     pages.map((p) => {
       return (
@@ -35,6 +43,7 @@ const pages = [
             'p-2',
             'tabItem',
             'z-20',
+            'md:text-sm',
             {
               'hidden md:block md:opacity-30 md:hover:opacity-50':
                 !Astro.url.pathname.includes(p.slug),
@@ -46,6 +55,7 @@ const pages = [
       )
     })
   }
+</div>
   <div class="catalogToggle md:hidden relative w-5 h-4 mr-2 z-40">
     <span class="stroke"/>
     <span class="stroke"/>
