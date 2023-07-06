@@ -21,11 +21,11 @@ const sliceWorkList = workList.slice(0, 3)
               <a
                 href={`/${work.workName.replace(/ /g, '_')}`}
                 id="workName"
-                class=" text-white w-full h-full absolute flex flex-col items-center justify-center text-sm font-sans font-thin italic z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
+                class=" text-white w-full h-full absolute flex flex-col items-center justify-center text-base md:text-sm font-sans font-thin italic z-30 opacity-100 md:opacity-0 decoration-none md:backdrop-blur-sm"
               >
                 {work.workName}
               </a>
-              <div class="relative opacity-90 md:opacity-100">
+              <div class="relative md:opacity-100 min-h-min min-w-min">
                 <Image
                   coverUrl={work.coverImage[0].url}
                   placeholderUrl={work.placeHolderImage[0].url}
@@ -35,11 +35,11 @@ const sliceWorkList = workList.slice(0, 3)
           )
         })
       }
-        <div id="" class="relative h446.4px w446.4px md:w273.15px md:h273.15px">
+        <div id="" class="relative max-h446.4px max-w446.4px md:w273.15px md:h273.15px">
           <a
             class=" text-white dark:text-black w-full h-full absolute flex flex-col items-center justify-center text-sm font-sans font-thin italic z-30 opacity-100 decoration-none md:backdrop-blur-sm"
           >
-           Be coming
+          blank
           </a>
           <div class="w-full h-full relative opacity-90 md:opacity-100 bg-black dark:bg-white">
           </div>
