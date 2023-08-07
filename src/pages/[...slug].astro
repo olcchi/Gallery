@@ -144,6 +144,7 @@ const imageController = (direction: 'prev' | 'next') => {
     curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
   } else {
     modalImg.classList.add('opacity-0')
+    prev.classList.add('disabled')
     curIndex = 0
     setTimeout(() => {
       modalImg.src = imgs[curIndex].dataset.src!
