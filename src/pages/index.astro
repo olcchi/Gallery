@@ -8,10 +8,11 @@ const sliceWorkList = workList.slice(0, 3)
 ---
 
 <GalleryLayout title={'Gallery - yi'}>
+  <i id="cursor" class="i-carbon-view dark:bg-white p-3 fixed top-0 left-0 hidden"/>
   <main class="slide-in">
     <section
     id="workCatalog"
-    class=" flex flex-col gap-2 justify-center items-center"
+    class=" flex flex-col gap-2 justify-center items-center  cursor-none!"
   >
   <p class="w-48 font-serif text-xl">Work</p>
     {
@@ -21,7 +22,7 @@ const sliceWorkList = workList.slice(0, 3)
             <a
               href={`/${work.workName.replace(/ /g, '_')}`}
               id="workName"
-              class="decoration-none font-serif!"
+              class="decoration-none font-serif! cursor-none! "
             >
               {work.workName}
             </a>
@@ -39,8 +40,8 @@ const sliceWorkList = workList.slice(0, 3)
         <div class="w-full h-full relative opacity-90 md:opacity-100">
         </div>
       </div> -->
-      <hr class="w-48 dark:opacity-20 mx-auto">
-      <div class="w-48 font-serif">· CV</div>
+      <!-- <hr class="w-24 dark:opacity-20 mx-auto"> -->
+      <div class="w-48 font-serif border-t pt-1 dark:border-dark border-gray-2">· CV</div>
     </section>
   </main>
 </GalleryLayout>
@@ -53,3 +54,19 @@ const sliceWorkList = workList.slice(0, 3)
     @apply opacity-100!
   }
 </style>
+
+<script>
+const workCatalog:HTMLDivElement = document.querySelector('#workCatalog')!
+const cursor:HTMLElement = document.querySelector('#cursor')!
+
+workCatalog.onmouseenter = () => {
+  cursor.style.display = 'block'
+  window.onmousemove = (e:MouseEvent) => {
+    cursor.style.top = `${e.clientY - 10}px`
+    cursor.style.left = `${e.clientX - 10}px`
+  }
+}
+workCatalog.onmouseleave = () => {
+  cursor.style.display = 'none'
+}
+</script>
