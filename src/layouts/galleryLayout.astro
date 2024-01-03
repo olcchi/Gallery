@@ -17,7 +17,7 @@ const { title } = Astro.props;
   </head>
   <body class="themeBase flex justify-center items-center">
     <a href="/" class="font-serif italic animate-fill-both fixed top-5 left-5 cursor-pointer!">Gallery</a>
-    <img src="/rainbow.png" alt="" class="h-200 fixed opacity-60 -z-10 top-10 min-w-min min-h-min select-none!">
+    <img id="rainbow" src="/rainbow.png" alt="" class="h-200 fixed opacity-60 -z-10 top-10 min-w-min min-h-min select-none!">
 
     <main class="grid grid-cols-[1fr_min(55ch,90%)_1fr] ">
       <article class="min-h-screen flex flex-col justify-center relative col-start-2 col-end-3">
@@ -61,3 +61,10 @@ preferTheme()
     bottom: 0;
   }
 </style>
+
+<script>
+const rainbow:HTMLImageElement = document.querySelector('#rainbow')!
+rainbow.ondragstart = function(event) {
+  event.preventDefault()
+}
+</script>
