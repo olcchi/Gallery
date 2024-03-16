@@ -13,10 +13,10 @@ const workIndex: Record<string, number> = {
   tu: 0,
   un: 1,
   al: 2,
-  // ne: 3,
+  ne: 3,
   all: 4,
 }
-export const get: APIRoute = async ({ params }) => {
+export const get: APIRoute = async({ params }) => {
   const index = workIndex[params.workId!]
   const work = index !== undefined
     ? index === 4
