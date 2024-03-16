@@ -20,11 +20,11 @@ export async function getStaticPaths() {
       work: 'al',
       route: 'Another Landscape',
     },
-    // {
-    //   slug: 'Never_Know_How_Much_I_Love_You',
-    //   work: 'ne',
-    //   route: 'Never Know How Much I Love You',
-    // },
+    {
+      slug: 'Never_Know_How_Much_I_Love_You',
+      work: 'ne',
+      route: 'Never Know How Much I Love You',
+    },
   ]
   return pages.map(({ slug, work, route }) => {
     return {
