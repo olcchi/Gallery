@@ -14,6 +14,7 @@
     "@astrojs/image": "^0.16.6",
     "@iconify-json/carbon": "^1.1.27",
     "@iconify-json/ph": "^1.1.5",
+    "@iconify-json/tabler": "^1.1.105",
     "astro": "^2.2.2",
     "vite": "^4.2.1"
   },
@@ -29,6 +30,6 @@
     "@unocss/transformer-directives": "^0.51.4",
     "eslint": "^8.37.0",
     "eslint-plugin-astro": "^0.26.1",
-    "unocss": "^0.50.6"
+    "unocss": "^0.58.4"
   }
 }
