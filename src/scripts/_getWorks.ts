@@ -1,5 +1,5 @@
 // type works = 'all' | 'tu' | 'al' | 'un'
-type works = 'all' | 'tu' | 'al' | 'un'
+type works = 'all' | 'tu' | 'al' | 'un' | 'ne'
 export async function getWorks(workName: works, _href) {
   const href = import.meta.env.PROD
     ? 'https://ekargallery.netlify.app/'

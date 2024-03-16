@@ -1,0 +1,33 @@
+---
+// import GalleryLayout from '@layouts/galleryLayout.astro'
+// // import Image from '@components/Image.astro'
+// import { getWorks } from '../scripts/_getWorks'
+// const _href = Astro.request.url
+// const workList = await getWorks('all', _href)
+// const sliceWorkList = workList.slice(0, 3)
+---
+<main>
+<div class="w-200 h-200 mt-20">
+    <i class="i-tabler-calendar text-3xl text-black p-20"></i>
+</div>
+</main>
+
+<style>
+
+</style>
+
+<script>
+const workCatalog:HTMLDivElement = document.querySelector('#workCatalog')!
+const cursor:HTMLElement = document.querySelector('#cursor')!
+
+workCatalog.onmouseenter = () => {
+  cursor.style.display = 'block'
+  window.onmousemove = (e:MouseEvent) => {
+    cursor.style.top = `${e.clientY - 10}px`
+    cursor.style.left = `${e.clientX - 10}px`
+  }
+}
+workCatalog.onmouseleave = () => {
+  cursor.style.display = 'none'
+}
+</script>

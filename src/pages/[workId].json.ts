@@ -16,7 +16,7 @@ const workIndex: Record<string, number> = {
   // ne: 3,
   all: 4,
 }
-export const get: APIRoute = async({ params }) => {
+export const get: APIRoute = async ({ params }) => {
   const index = workIndex[params.workId!]
   const work = index !== undefined
     ? index === 4
@@ -32,7 +32,7 @@ export function getStaticPaths() {
     { params: { workId: 'tu' } },
     { params: { workId: 'un' } },
     { params: { workId: 'al' } },
-    // { params: { workId: 'ne' } },
+    { params: { workId: 'ne' } },
     { params: { workId: 'all' } },
   ]
 }
