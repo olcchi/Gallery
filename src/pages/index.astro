@@ -4,7 +4,7 @@ import GalleryLayout from '@layouts/galleryLayout.astro'
 import { getWorks } from '../scripts/_getWorks'
 const _href = Astro.request.url
 const workList = await getWorks('all', _href)
-const sliceWorkList = workList.slice(0, 4)
+const sliceWorkList = workList.slice(0, 3)
 ---
 
 <GalleryLayout title={'Gallery - yi'}>
