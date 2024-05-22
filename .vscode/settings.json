@@ -12,5 +12,13 @@
     "astro",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "cSpell.words": [
+    "Attributify",
+    "fontshare",
+    "Satoshi",
+    "Telma",
+    "unocss"
+  ],
+  "files.defaultLanguage": ""
 }
