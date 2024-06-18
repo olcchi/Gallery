@@ -11,11 +11,11 @@
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix"
   },
   "dependencies": {
-    "@astrojs/image": "^0.16.6",
+    "@astrojs/image": "^0.18.0",
     "@iconify-json/carbon": "^1.1.27",
     "@iconify-json/ph": "^1.1.5",
     "@iconify-json/tabler": "^1.1.105",
-    "astro": "^2.2.2",
+    "astro": "^4.10.3",
     "vite": "^4.2.1"
   },
   "devDependencies": {
