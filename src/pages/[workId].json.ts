@@ -16,16 +16,19 @@ const workIndex: Record<string, number> = {
   // ne: 3,
   all: 4,
 }
-export const get: APIRoute = async({ params }) => {
+export const get: APIRoute = async ({ params }) => {
   const index = workIndex[params.workId!]
   const work = index !== undefined
     ? index === 4
       ? workRecords.map(({ workName, coverImage, placeHolderImage }) => ({ workName, coverImage, placeHolderImage }))
       : workRecords[index].picture
     : null
-  return {
-    body: JSON.stringify(work),
-  }
+  return new Response(JSON.stringify(work), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
 export function getStaticPaths() {
   return [
