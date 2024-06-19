@@ -1,4 +1,4 @@
-type works = 'all' | 'tu' | 'al' | 'un'
+type works = 'all' | 'tu' | 'al' | 'un' | string
 // type works = 'all' | 'tu' | 'al' | 'un' | 'ne'
 export async function getWorks(workName: works, _href) {
   const href = import.meta.env.PROD

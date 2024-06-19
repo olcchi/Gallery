@@ -1,56 +1,56 @@
 ---
-import { Image } from '@astrojs/image/components'
-import WorkLayout from '@layouts/workLayout.astro'
-import ModalImage from '@components/modalImage.astro'
-import { getWorks } from '../scripts/_getWorks'
+import { Image } from "astro:assets";
+import WorkLayout from "@layouts/workLayout.astro";
+import ModalImage from "@components/modalImage.astro";
+import { getWorks } from "../scripts/_getWorks";
 export async function getStaticPaths() {
   const pages = [
     {
-      slug: 'Turpan',
-      work: 'tu',
-      route: 'Turpan',
+      slug: "Turpan",
+      work: "tu",
+      route: "Turpan",
     },
     {
-      slug: 'Unnoticed',
-      work: 'un',
-      route: 'Unnoticed',
+      slug: "Unnoticed",
+      work: "un",
+      route: "Unnoticed",
     },
     {
-      slug: 'Another_Landscape',
-      work: 'al',
-      route: 'Another Landscape',
+      slug: "Another_Landscape",
+      work: "al",
+      route: "Another Landscape",
     },
     // {
     //   slug: 'Never_Know_How_Much_I_Love_You',
     //   work: 'ne',
     //   route: 'Never Know How Much I Love You',
     // },
-  ]
+  ];
   return pages.map(({ slug, work, route }) => {
     return {
       params: { slug },
       props: { work, route },
-    }
-  })
+    };
+  });
 }
 
-const { work, route } = Astro.props
+const { work, route } = Astro.props;
 
-const _href = Astro.url.origin
-const picList = await getWorks(work, _href)
+const _href = Astro.url.origin;
+const picList = await getWorks(work, _href);
 
-const columns = 4
+const columns = 4;
 function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
-  const result = new Array(columns).fill(null).map((): any[] => [])
+  const result = new Array(columns).fill(null).map((): any[] => []);
 
   photos.forEach((photo, index) => {
-    const column = index % columns
-    result[column].push(photo)
-  })
+    const column = index % columns;
+    result[column].push(photo);
+  });
 
-  return result
+  return result;
 }
-const photos = splitPhotosIntoColumns(picList, columns)
+const photos = splitPhotosIntoColumns(picList, columns);
 ---
 
 <WorkLayout title={route}>
@@ -67,19 +67,18 @@ const photos = splitPhotosIntoColumns(picList, columns)
                 return (
                   <Image
                     class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
-                    width={240}
-                    aspectRatio={'auto'}
+                    inferSize={true}
                     data-src={p.url}
                     src={p.url}
-                    format={'webp'}
-                    loading={'lazy'}
+                    format={"webp"}
+                    loading={"lazy"}
                     quality={100}
                     alt="Image"
                   />
-                )
+                );
               })}
             </div>
-          )
+          );
         })
       }
     </div>
@@ -87,42 +86,43 @@ const photos = splitPhotosIntoColumns(picList, columns)
 </WorkLayout>
 
 <script>
-const imgs: HTMLImageElement[] = Array.from(
-  document.querySelectorAll('.flowImage'),
-)!
-const modalImageWrapper: HTMLImageElement
-  = document.querySelector('.modalImageWrapper')!
-const modalImg: HTMLImageElement = document.querySelector('.modalImg')!
-const returnTo = document.querySelector('.returnTo')!
-const prev = document.querySelector('.prev')!
-const next = document.querySelector('.next')!
-const curImage = document.querySelector('.curImage')!
-let curIndex
-returnTo.addEventListener('click', () => {
-  modalImageWrapper.classList.add('hidden')
-  document.body.style.overflow = 'auto'
-  modalImg.src = ''
-})
-modalImageWrapper!.addEventListener('wheel', (e) => {
-  e.preventDefault()
-})
-modalImageWrapper!.addEventListener('touchmove', (e) => {
-  e.preventDefault()
-})
-imgs.forEach((img, I) => {
-    img!.classList.add('opacity-0')
-    const _img = new Image()
-    _img.src = img.src
+  const imgs: HTMLImageElement[] = Array.from(
+    document.querySelectorAll(".flowImage"),
+  )!;
+  const modalImageWrapper: HTMLImageElement =
+    document.querySelector(".modalImageWrapper")!;
+  const modalImg: HTMLImageElement = document.querySelector(".modalImg")!;
+  const returnTo = document.querySelector(".returnTo")!;
+  const prev = document.querySelector(".prev")!;
+  const next = document.querySelector(".next")!;
+  const curImage = document.querySelector(".curImage")!;
+  let curIndex;
+  returnTo.addEventListener("click", () => {
+    modalImageWrapper.classList.add("hidden");
+    document.body.style.overflow = "auto";
+    modalImg.src = "";
+  });
+  modalImageWrapper!.addEventListener("wheel", (e) => {
+    e.preventDefault();
+  });
+  modalImageWrapper!.addEventListener("touchmove", (e) => {
+    e.preventDefault();
+  });
+  imgs.forEach((img, I) => {
+    img!.classList.add("opacity-0");
+    const _img = new Image();
+    _img.src = img.src;
     _img.onload = () => {
-      img!.classList.remove('opacity-0')
-    }
+      img!.classList.remove("opacity-0");
+    };
 
-    img!.addEventListener('click', () => {
-      modalImg.src = img.dataset.src!
-      modalImageWrapper.classList.remove('hidden')
-      document.body.style.overflow = 'hidden'
-      curIndex = I
+    img!.addEventListener("click", () => {
+      modalImg.src = img.dataset.src!;
+      modalImageWrapper.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      curIndex = I;
       curIndex === 0
+<<<<<<< Updated upstream
         ? prev.classList.add('disabled')
         : prev.classList.remove('disabled')
       curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
@@ -151,16 +151,46 @@ const imageController = (direction: 'prev' | 'next') => {
     }, 100)
     modalImg.onload = () => {
       modalImg.classList.remove('opacity-0')
+=======
+        ? prev.classList.add("disabled")
+        : prev.classList.remove("disabled");
+      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
+    });
+  });
+  const imageController = (direction: "prev" | "next") => {
+    if (direction === "prev" ? curIndex > 0 : curIndex < imgs.length - 1) {
+      modalImg.classList.add("opacity-0");
+      direction === "prev" ? curIndex-- : curIndex++;
+      setTimeout(() => {
+        modalImg.src = imgs[curIndex].dataset.src!;
+      }, 100);
+      curIndex === 0
+        ? prev.classList.add("disabled")
+        : prev.classList.remove("disabled");
+      modalImg.onload = () => {
+        modalImg.classList.remove("opacity-0");
+      };
+      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
+    } else {
+      modalImg.classList.add("opacity-0");
+      prev.classList.add("disabled");
+      curIndex = 0;
+      setTimeout(() => {
+        modalImg.src = imgs[curIndex].dataset.src!;
+      }, 100);
+      modalImg.onload = () => {
+        modalImg.classList.remove("opacity-0");
+      };
+      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
+>>>>>>> Stashed changes
     }
-    curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
-  }
-}
-prev.addEventListener('click', () => {
-  imageController('prev')
-})
-next.addEventListener('click', () => {
-  imageController('next')
-})
+  };
+  prev.addEventListener("click", () => {
+    imageController("prev");
+  });
+  next.addEventListener("click", () => {
+    imageController("next");
+  });
 </script>
 
 <style is:global>

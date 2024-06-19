@@ -1,9 +1,9 @@
 ---
-import { Image } from '@astrojs/image/components'
-export interface Props {
-  coverUrl: string;
-  placeholderUrl: string;
-}
+import { Image as AstroImage } from "astro:assets";
+// export interface Props {
+//   coverUrl: string;
+//   placeholderUrl: string;
+// }
 const { coverUrl, placeholderUrl } = Astro.props;
 ---
 
@@ -14,42 +14,41 @@ const { coverUrl, placeholderUrl } = Astro.props;
   >
   </div>
 
-  <Image
+  <AstroImage
     alt="cover"
     width={600}
-    aspectRatio={1}
     class="coverImage transition-all z-0"
-    format={'webp'}
+    format={"webp"}
     src={coverUrl}
     quality={100}
   />
 
-  <Image
+  <AstroImage
     alt="placeholder"
     width={600}
-    aspectRatio={1}
     class="placeholderImage transition-all absolute top-0 left-0 z-10"
-    format={'webp'}
+    format={"webp"}
     src={placeholderUrl}
     quality={1}
   />
 </main>
 
 <script>
-const workImage = document.querySelectorAll('.clatalogItem')
-workImage.forEach((i) => {
-  const imageHigh = new Image()
-  const mask = i.children[0]
-  const cover = i.children[1]
-  const placeholder = i.children[2]
-  imageHigh.src = (cover as HTMLImageElement).src
-  imageHigh.onload = () => {
-    setTimeout(() => {
-      cover.classList.remove('hidden')
-      mask.classList.remove('opacity-100')
-      mask.classList.add('opacity-0')
-      placeholder.classList.add('hidden')
-    }, 50)
-  }
-})
+  const workImage = document.querySelectorAll(".clatalogItem");
+  console.log(workImage);
+  workImage.forEach((i) => {
+    const imageHigh = new Image();
+    const mask = i.children[0];
+    const cover = i.children[1];
+    const placeholder = i.children[2];
+    imageHigh.src = (cover as HTMLImageElement).src;
+    imageHigh.onload = () => {
+      setTimeout(() => {
+        cover.classList.remove("hidden");
+        mask.classList.remove("opacity-100");
+        mask.classList.add("opacity-0");
+        placeholder.classList.add("hidden");
+      }, 50);
+    };
+  });
 </script>
