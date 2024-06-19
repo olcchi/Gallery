@@ -2,15 +2,15 @@
 import GalleryLayout from "@layouts/galleryLayout.astro";
 import { getWorks } from "../scripts/_getWorks";
 const _href = Astro.request.url;
-// const workList = await getWorks("all", _href);
-// const sliceWorkList = workList.slice(0, 3);
+const workList = await getWorks("all", _href);
+const sliceWorkList = workList.slice(0, 3);
 ---
 
 <GalleryLayout title={"Gallery - yi"}>
   <i
     id="cursor"
     class="i-carbon-view dark:bg-white p-3 fixed top-0 left-0 hidden"></i>
-  <!-- <main class="slide-in">
+  <main class="slide-in">
     <section
       id="workCatalog"
       class="flex flex-col gap-2 justify-center items-center cursor-none!"
@@ -36,7 +36,7 @@ const _href = Astro.request.url;
         · CV
       </div>
     </section>
-  </main> -->
+  </main>
 </GalleryLayout>
 
 <style>
