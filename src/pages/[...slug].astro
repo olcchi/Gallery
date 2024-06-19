@@ -122,41 +122,43 @@ const photos = splitPhotosIntoColumns(picList, columns);
       document.body.style.overflow = "hidden";
       curIndex = I;
       curIndex === 0
-        ? prev.classList.add('disabled')
-        : prev.classList.remove('disabled')
-      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
-    })
-})
-const imageController = (direction: 'prev' | 'next') => {
-  if (direction === 'prev' ? curIndex > 0 : curIndex < imgs.length - 1) {
-    modalImg.classList.add('opacity-0')
-    direction === 'prev' ? curIndex-- : curIndex++
-    setTimeout(() => {
-      modalImg.src = imgs[curIndex].dataset.src!
-    }, 100)
-    curIndex === 0
-      ? prev.classList.add('disabled')
-      : prev.classList.remove('disabled')
-    modalImg.onload = () => {
-      modalImg.classList.remove('opacity-0')
+        ? prev.classList.add("disabled")
+        : prev.classList.remove("disabled");
+      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
+    });
+  });
+  const imageController = (direction: "prev" | "next") => {
+    if (direction === "prev" ? curIndex > 0 : curIndex < imgs.length - 1) {
+      modalImg.classList.add("opacity-0");
+      direction === "prev" ? curIndex-- : curIndex++;
+      setTimeout(() => {
+        modalImg.src = imgs[curIndex].dataset.src!;
+      }, 100);
+      curIndex === 0
+        ? prev.classList.add("disabled")
+        : prev.classList.remove("disabled");
+      modalImg.onload = () => {
+        modalImg.classList.remove("opacity-0");
+      };
+      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
+    } else {
+      modalImg.classList.add("opacity-0");
+      prev.classList.add("disabled");
+      curIndex = 0;
+      setTimeout(() => {
+        modalImg.src = imgs[curIndex].dataset.src!;
+      }, 100);
+      modalImg.onload = () => {
+        modalImg.classList.remove("opacity-0");
+      };
     }
-    curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`
-  } else {
-    modalImg.classList.add('opacity-0')
-    curIndex = 0
-    setTimeout(() => {
-      modalImg.src = imgs[curIndex].dataset.src!
-    }, 100)
-    modalImg.onload = () => {
-      modalImg.classList.remove('opacity-0')
-    }
+    prev.addEventListener("click", () => {
+      imageController("prev");
+    });
+    next.addEventListener("click", () => {
+      imageController("next");
+    });
   };
-  prev.addEventListener("click", () => {
-    imageController("prev");
-  });
-  next.addEventListener("click", () => {
-    imageController("next");
-  });
 </script>
 
 <style is:global>
