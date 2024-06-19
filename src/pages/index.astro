@@ -1,18 +1,16 @@
 ---
 import GalleryLayout from "@layouts/galleryLayout.astro";
-// import Image from '@components/Image.astro'
-import { Image } from "astro:assets";
 import { getWorks } from "../scripts/_getWorks";
 const _href = Astro.request.url;
-const workList = await getWorks("all", _href);
-const sliceWorkList = workList.slice(0, 3);
+// const workList = await getWorks("all", _href);
+// const sliceWorkList = workList.slice(0, 3);
 ---
 
 <GalleryLayout title={"Gallery - yi"}>
   <i
     id="cursor"
     class="i-carbon-view dark:bg-white p-3 fixed top-0 left-0 hidden"></i>
-  <main class="slide-in">
+  <!-- <main class="slide-in">
     <section
       id="workCatalog"
       class="flex flex-col gap-2 justify-center items-center cursor-none!"
@@ -34,21 +32,11 @@ const sliceWorkList = workList.slice(0, 3);
           );
         })
       }
-      <!-- <div id="" class="relative max-h446.4px max-w446.4px md:w273.15px md:h273.15px">
-        <a
-          class="text-3xl text-black w-full h-full absolute flex flex-col items-center justify-center font-sans font-thin italic z-30 opacity-100 decoration-none md:backdrop-blur-sm"
-        >
-        CV
-        </a>
-        <div class="w-full h-full relative opacity-90 md:opacity-100">
-        </div>
-      </div> -->
-      <!-- <hr class="w-24 dark:opacity-20 mx-auto"> -->
       <div class="w-48 font-serif border-t pt-1 dark:border-dark border-gray-2">
         · CV
       </div>
     </section>
-  </main>
+  </main> -->
 </GalleryLayout>
 
 <style>
