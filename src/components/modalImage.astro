@@ -1,28 +1,29 @@
 ---
-import { Image } from '@astrojs/image/components'
+
 ---
-   <div
-      class="modal left-0 top-0 z-40 w-full h-full fixed flex flex-col items-center justify-center dark:bg-black/80 bg-white/80 absolute z-10 transition-all ease backdrop-blur-lg"
-    >
-      <div class="flex flex-col max-w-11/12 gap-2 z-30">
-        <Image
-          class="modalImg  max-h-lg md:max-h-xl w-auto transition-opacity ease select-none"
-          width={600}
-          aspectRatio={'origin'}
-          src={' '}
-          alt="modalImage"
-        />
-        <!-- <div class="loading font-sans font-thin font-italic text-center">
+
+<div
+  class="modal left-0 top-0 z-40 w-full h-full fixed flex flex-col items-center justify-center dark:bg-black/80 bg-white/80 absolute z-10 transition-all ease backdrop-blur-lg"
+>
+  <div class="flex flex-col max-w-11/12 gap-2 z-30">
+    <img
+      class="modalImg max-h-lg md:max-h-xl w-auto transition-opacity ease select-none"
+      src={""}
+      alt="modalImage"
+    />
+    <!-- <div class="loading font-sans font-thin font-italic text-center">
           Loading...
         </div> -->
-      </div>
-      <div class="flex items-center justify-end absolute bottom-10 select-none italic font-sans gap-2">
-        <span class="returnTo cursor-pointer md:hover:opacity-50 p-1">return</span>
-        <span>/</span>
-        <span class="prev cursor-pointer md:hover:opacity-50 p-1">prev</span>
-        <span>/</span>
-        <span class="curImage p-1"></span>
-        <span>/</span>
-        <span class="next cursor-pointer md:hover:opacity-50 p-1">next</span>
-      </div>
-    </div>
+  </div>
+  <div
+    class="flex items-center justify-end absolute bottom-10 select-none italic font-sans gap-2"
+  >
+    <span class="returnTo cursor-pointer md:hover:opacity-50 p-1">return</span>
+    <span>/</span>
+    <span class="prev cursor-pointer md:hover:opacity-50 p-1">prev</span>
+    <span>/</span>
+    <span class="curImage p-1"></span>
+    <span>/</span>
+    <span class="next cursor-pointer md:hover:opacity-50 p-1">next</span>
+  </div>
+</div>

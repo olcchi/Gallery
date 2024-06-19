@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config'
 import unocss from 'unocss/astro'
-import image from '@astrojs/image'
 
 export default defineConfig({
   // site: 'https://ekar.site',
@@ -14,7 +13,6 @@ export default defineConfig({
     unocss(
       { injectReset: true },
     ),
-    image(),
   ],
   server: {
     port: 8000,
