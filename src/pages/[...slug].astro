@@ -108,6 +108,7 @@ const photos = splitPhotosIntoColumns(picList, columns);
   modalImageWrapper!.addEventListener("touchmove", (e) => {
     e.preventDefault();
   });
+  // img fade in
   imgs.forEach((img, I) => {
     img!.classList.add("opacity-0");
     const _img = new Image();
@@ -115,7 +116,7 @@ const photos = splitPhotosIntoColumns(picList, columns);
     _img.onload = () => {
       img!.classList.remove("opacity-0");
     };
-
+    // modal img trigger
     img!.addEventListener("click", () => {
       modalImg.src = img.dataset.src!;
       modalImageWrapper.classList.remove("hidden");
@@ -152,13 +153,13 @@ const photos = splitPhotosIntoColumns(picList, columns);
         modalImg.classList.remove("opacity-0");
       };
     }
-    prev.addEventListener("click", () => {
-      imageController("prev");
-    });
-    next.addEventListener("click", () => {
-      imageController("next");
-    });
   };
+  prev.addEventListener("click", () => {
+    imageController("prev");
+  });
+  next.addEventListener("click", () => {
+    imageController("next");
+  });
 </script>
 
 <style is:global>
