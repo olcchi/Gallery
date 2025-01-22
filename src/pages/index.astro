@@ -1,12 +1,12 @@
 ---
-import GalleryLayout from "@layouts/galleryLayout.astro";
-import { getWorks } from "../scripts/_getWorks";
-const _href = Astro.request.url;
-const workList = await getWorks("all", _href);
+import GalleryLayout from '@layouts/galleryLayout.astro'
+import { getWorks } from '../scripts/_getWorks'
+const _href = Astro.request.url
+const workList = await getWorks('all', _href)
 const sliceWorkList = workList.slice(0, 3);
 ---
 
-<GalleryLayout title={"Gallery - yi"}>
+<GalleryLayout title={'Gallery - yi'}>
   <i
     id="cursor"
     class="i-carbon-view dark:bg-white p-3 fixed top-0 left-0 hidden"></i>
@@ -21,7 +21,7 @@ const sliceWorkList = workList.slice(0, 3);
           return (
             <div id="work-item" class="relative h-full w-80 flex items-center">
               <a
-                href={`/${work.workName.replace(/ /g, "_")}`}
+                href={`/${work.workName.replace(/ /g, '_')}`}
                 id="workName"
                 class="decoration-none font-serif! cursor-none! "
               >
@@ -29,11 +29,13 @@ const sliceWorkList = workList.slice(0, 3);
               </a>
               <i id="caret" class="i-carbon-caret-right p-2 opacity-30" />
             </div>
-          );
+          )
         })
       }
       <div class="w-48 font-serif border-t pt-1 dark:border-dark border-gray-2">
-        · CV
+        <a href="/cv">
+          · CV
+        </a>
       </div>
     </section>
   </main>
@@ -49,17 +51,16 @@ const sliceWorkList = workList.slice(0, 3);
 </style>
 
 <script>
-  const workCatalog: HTMLDivElement = document.querySelector("#workCatalog")!;
-  const cursor: HTMLElement = document.querySelector("#cursor")!;
-
-  workCatalog.onmouseenter = () => {
-    cursor.style.display = "block";
-    window.onmousemove = (e: MouseEvent) => {
-      cursor.style.top = `${e.clientY - 10}px`;
-      cursor.style.left = `${e.clientX - 10}px`;
-    };
-  };
-  workCatalog.onmouseleave = () => {
-    cursor.style.display = "none";
-  };
+const workCatalog: HTMLDivElement = document.querySelector('#workCatalog')!
+const cursor: HTMLElement = document.querySelector('#cursor')!
+workCatalog.onmouseenter = () => {
+  cursor.style.display = 'block'
+  window.onmousemove = (e: MouseEvent) => {
+    cursor.style.top = `${e.clientY - 10}px`
+    cursor.style.left = `${e.clientX - 10}px`
+  }
+}
+workCatalog.onmouseleave = () => {
+  cursor.style.display = 'none'
+}
 </script>
