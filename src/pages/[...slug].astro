@@ -87,7 +87,7 @@ const photos = splitPhotosIntoColumns(picList, columns);
 
 <script>
   const imgs: HTMLImageElement[] = Array.from(
-    document.querySelectorAll(".flowImage"),
+    document.querySelectorAll(".flowImage")
   )!;
   const modalImageWrapper: HTMLImageElement =
     document.querySelector(".modalImageWrapper")!;
@@ -128,6 +128,7 @@ const photos = splitPhotosIntoColumns(picList, columns);
       curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
     });
   });
+
   const imageController = (direction: "prev" | "next") => {
     if (direction === "prev" ? curIndex > 0 : curIndex < imgs.length - 1) {
       modalImg.classList.add("opacity-0");
@@ -141,7 +142,6 @@ const photos = splitPhotosIntoColumns(picList, columns);
       modalImg.onload = () => {
         modalImg.classList.remove("opacity-0");
       };
-      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
     } else {
       modalImg.classList.add("opacity-0");
       prev.classList.add("disabled");
@@ -153,6 +153,7 @@ const photos = splitPhotosIntoColumns(picList, columns);
         modalImg.classList.remove("opacity-0");
       };
     }
+    curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
   };
   prev.addEventListener("click", () => {
     imageController("prev");
