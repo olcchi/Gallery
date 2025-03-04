@@ -1,14 +1,14 @@
 ---
-import Header from '@components/header.astro'
-import Mask from '@components/mask.astro'
-import '../styles/main.css'
+import Header from "@components/header.astro";
+import Mask from "@components/mask.astro";
+import "../styles/main.css";
 interface Props {
   title?: string;
 }
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
@@ -17,6 +17,10 @@ const { title } = Astro.props;
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.png" />
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="1d45d0ba-a3f0-461b-ab06-f210aab68344"></script>
   </head>
   <body class="themeBase">
     <main class="grid grid-cols-[1fr_min(65ch,90%)_1fr] relative">
@@ -34,21 +38,21 @@ const { title } = Astro.props;
 </html>
 
 <script is:inline>
-const colorSchema = window.matchMedia('(prefers-color-scheme: dark)')
-const prefersDark = colorSchema.matches
-const preferTheme = () => {
-  !localStorage.getItem('globalTheme')
-    && localStorage.setItem('globalTheme', prefersDark ? 'dark' : 'light')
-  const setting = localStorage.getItem('globalTheme')
-  if (setting === 'dark' || (prefersDark && setting !== 'light'))
-    document.documentElement.classList.toggle('dark', true)
-  colorSchema.addEventListener('change', () => {
-    document.documentElement.classList.toggle('dark', colorSchema.matches)
-    localStorage.setItem(
-      'globalTheme',
-      colorSchema.matches ? 'dark' : 'light',
-    )
-  })
-}
-preferTheme()
+  const colorSchema = window.matchMedia("(prefers-color-scheme: dark)");
+  const prefersDark = colorSchema.matches;
+  const preferTheme = () => {
+    !localStorage.getItem("globalTheme") &&
+      localStorage.setItem("globalTheme", prefersDark ? "dark" : "light");
+    const setting = localStorage.getItem("globalTheme");
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
+    colorSchema.addEventListener("change", () => {
+      document.documentElement.classList.toggle("dark", colorSchema.matches);
+      localStorage.setItem(
+        "globalTheme",
+        colorSchema.matches ? "dark" : "light"
+      );
+    });
+  };
+  preferTheme();
 </script>
