@@ -1,7 +1,7 @@
-###  ***[gallery.ekar.site](https://gallery.ekar.site)***
+###  ***[gallery.olcchi.me](https://gallery.olcchi.me)***
 My personal gallery
 ### ***Usage***  
-Refer to [ekar.site](https://github.com/Ekarmore/ekar.site)
+Refer to [olcchi.me](https://github.com/Ekarmore/olcchi.me)
 
 ### ***LICENSE***
  The website source code follows the [MIT](./LICENSE) license,  

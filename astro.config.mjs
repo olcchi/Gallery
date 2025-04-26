@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config'
 import unocss from 'unocss/astro'
 
 export default defineConfig({
-  // site: 'https://ekar.site',
+  // site: 'https://olcchi.me',
   markdown: {
     shikiConfig: {
       theme: 'css-variables',

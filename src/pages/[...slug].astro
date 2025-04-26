@@ -37,7 +37,7 @@ export async function getStaticPaths() {
 const { work, route } = Astro.props;
 
 const _href = Astro.url.origin;
-const picList = await getWorks(work, _href);
+const picList = await getWorks(work as any, _href);
 
 const columns = 4;
 function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
