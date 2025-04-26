@@ -2,7 +2,7 @@ type works = 'all' | 'tu' | 'al' | 'un'
 // type works = 'all' | 'tu' | 'al' | 'un' | 'ne'
 export async function getWorks(workName: works, _href) {
   const href = import.meta.env.PROD
-    ? 'https://ekargallery.netlify.app/'
+    ? 'https://yigallery.netlify.app/'
     : _href
   const url = workName === 'all' ? `${href}all.json` : `${href}/${workName}.json`
   const res = await fetch(url)
