@@ -1,61 +1,68 @@
 ---
-import '../styles/main.css'
+import Noise from "@components/noise.astro";
 interface Props {
   title?: string;
 }
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.png">
+    <title>{title}</title>
+    <link rel="icon" href="/favicon.png" />
   </head>
   <body class="themeBase flex justify-center items-center">
-    <a href="/" class="font-serif italic animate-fill-both fixed top-5 left-5 cursor-pointer!">Gallery</a>
-    <img id="rainbow" src="/rainbow.png" alt="" class="h-200 fixed opacity-60 -z-10 top-10 min-w-200 select-none!">
-    <main class="grid grid-cols-[1fr_min(55ch,90%)_1fr] ">
-      <article class="min-h-screen flex flex-col justify-center relative col-start-2 col-end-3">
-          <slot />
+    <Noise />
+    <a
+      href="/"
+      class="font-serif italic animate-fill-both fixed top-5 left-5 cursor-pointer!"
+      >Gallery</a
+    >
+    <img
+      id="rainbow"
+      src="/rainbow.png"
+      alt=""
+      class="h-200 fixed opacity-60 -z-10 top-10 min-w-200 select-none!"
+    />
+    <main class="grid grid-cols-[1fr_min(55ch,90%)_1fr]">
+      <article
+        class="min-h-screen flex flex-col justify-center relative col-start-2 col-end-3"
+      >
+        <slot />
       </article>
     </main>
   </body>
 </html>
 
 <script is:inline>
-const colorSchema = window.matchMedia('(prefers-color-scheme: dark)')
-const prefersDark = colorSchema.matches
-const preferTheme = () => {
-  !localStorage.getItem('globalTheme') && localStorage.setItem('globalTheme', prefersDark ? 'dark' : 'light')
-  const setting = localStorage.getItem('globalTheme')
-  if (setting === 'dark' || (prefersDark && setting !== 'light'))
-    document.documentElement.classList.toggle('dark', true)
+  const colorSchema = window.matchMedia("(prefers-color-scheme: dark)");
+  const prefersDark = colorSchema.matches;
+  const preferTheme = () => {
+    !localStorage.getItem("globalTheme") &&
+      localStorage.setItem("globalTheme", prefersDark ? "dark" : "light");
+    const setting = localStorage.getItem("globalTheme");
+    if (setting === "dark" || (prefersDark && setting !== "light"))
+      document.documentElement.classList.toggle("dark", true);
 
-  colorSchema.addEventListener('change', () => {
-    document.documentElement.classList.toggle('dark', colorSchema.matches)
-    localStorage.setItem(
-      'globalTheme',
-      colorSchema.matches ? 'dark' : 'light',
-    )
-  })
-}
-preferTheme()
+    colorSchema.addEventListener("change", () => {
+      document.documentElement.classList.toggle("dark", colorSchema.matches);
+      localStorage.setItem(
+        "globalTheme",
+        colorSchema.matches ? "dark" : "light"
+      );
+    });
+  };
+  preferTheme();
 </script>
 
-<style>
-  body{
-    background-image: url("/Noise.png");
-    background-size: 10%;
-  }
-</style>
-
 <script>
-const rainbow:HTMLImageElement = document.querySelector('#rainbow')!
-rainbow.ondragstart = function(event) {
-  event.preventDefault()
-}
+  const rainbow: HTMLImageElement = document.querySelector("#rainbow")!;
+  rainbow.ondragstart = function (event) {
+    event.preventDefault();
+  };
 </script>
