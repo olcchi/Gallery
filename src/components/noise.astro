@@ -3,19 +3,19 @@
 ---
 
 <canvas
-  class={`fixed inset-0 w-full h-full pointer-events-none`}
+  class={`fixed inset-0 w-full h-full pointer-events-none mix-blend-overlay`}
   id="noise-canvas"></canvas>
 
 <script is:inline>
-  const density = 0.1;
-  const opacity = 0.1;
-  const color = "#ffffff";
+  const density = 0.15;
+  let opacity = 0.6;
+  let color = "#ffffff";
+  const particleSize = 0.8; // 默认颗粒大小为 1px
   const canvas = document.getElementById("noise-canvas");
   if (canvas) {
     const ctx = canvas.getContext("2d");
     if (ctx) {
       const dpr = window.devicePixelRatio;
-
       const updateCanvas = () => {
         canvas.width = window.innerWidth * dpr;
         canvas.height = window.innerHeight * dpr;
@@ -32,10 +32,17 @@
 
         for (let i = 0; i < data.length; i += 4) {
           if (Math.random() < density) {
-            data[i] = r; // R
-            data[i + 1] = g; // G
-            data[i + 2] = b; // B
-            data[i + 3] = opacity * 255; // A
+            for (let dx = 0; dx < particleSize; dx++) {
+              for (let dy = 0; dy < particleSize; dy++) {
+                const pixelIndex = i + (dy * canvas.width + dx) * 4;
+                if (pixelIndex < data.length) {
+                  data[pixelIndex] = r; // R
+                  data[pixelIndex + 1] = g; // G
+                  data[pixelIndex + 2] = b; // B
+                  data[pixelIndex + 3] = opacity * 255; // A
+                }
+              }
+            }
           }
         }
 
