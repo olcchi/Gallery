@@ -13,14 +13,13 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
     <link rel="icon" href="/favicon.png" />
   </head>
   <body class="bg-black flex justify-center items-center">
     <Noise />
     <a
       href="/"
-      class="text-white font-serif italic animate-fill-both fixed top-5 left-5 cursor-pointer!"
+      class="text-white font-serif italic fixed top-5 left-5 cursor-pointer!"
       >Gallery</a
     >
     <img
@@ -28,33 +27,8 @@ const { title } = Astro.props;
       alt=""
       class="fixed inset-0 opacity-60 -z-10 select-none! object-cover min-h-screen"
     />
-    <main class="grid grid-cols-[1fr_min(55ch,90%)_1fr]">
-      <article
-        class="min-h-screen flex flex-col justify-center relative col-start-2 col-end-3"
-      >
-        <slot />
-      </article>
+    <main class="min-h-screen flex flex-col justify-center">
+      <slot />
     </main>
   </body>
 </html>
-
-<script is:inline>
-  // const colorSchema = window.matchMedia("(prefers-color-scheme: dark)");
-  // const prefersDark = colorSchema.matches;
-  // const preferTheme = () => {
-  //   !localStorage.getItem("globalTheme") &&
-  //     localStorage.setItem("globalTheme", prefersDark ? "dark" : "light");
-  //   const setting = localStorage.getItem("globalTheme");
-  //   if (setting === "dark" || (prefersDark && setting !== "light"))
-  //     document.documentElement.classList.toggle("dark", true);
-
-  //   colorSchema.addEventListener("change", () => {
-  //     document.documentElement.classList.toggle("dark", colorSchema.matches);
-  //     localStorage.setItem(
-  //       "globalTheme",
-  //       colorSchema.matches ? "dark" : "light"
-  //     );
-  //   });
-  // };
-  // preferTheme();
-</script>
