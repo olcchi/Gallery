@@ -1,13 +1,9 @@
 ---
 import { Image as AstroImage } from "astro:assets";
-// export interface Props {
-//   coverUrl: string;
-//   placeholderUrl: string;
-// }
 const { coverUrl, placeholderUrl } = Astro.props;
 ---
 
-<main class="clatalogItem">
+<main class="catalogItem">
   <div
     id="mask"
     class="absolute w-full h-full backdrop-blur-md opacity-100 z-20 transition-all duration-500 ease-in-out"
@@ -34,7 +30,7 @@ const { coverUrl, placeholderUrl } = Astro.props;
 </main>
 
 <script>
-  const workImage = document.querySelectorAll(".clatalogItem");
+  const workImage = document.querySelectorAll(".catalogItem");
   console.log(workImage);
   workImage.forEach((i) => {
     const imageHigh = new Image();
