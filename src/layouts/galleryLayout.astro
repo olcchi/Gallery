@@ -16,11 +16,11 @@ const { title } = Astro.props;
     <title>{title}</title>
     <link rel="icon" href="/favicon.png" />
   </head>
-  <body class="themeBase flex justify-center items-center">
+  <body class="bg-black flex justify-center items-center">
     <Noise />
     <a
       href="/"
-      class="font-serif italic animate-fill-both fixed top-5 left-5 cursor-pointer!"
+      class="text-white font-serif italic animate-fill-both fixed top-5 left-5 cursor-pointer!"
       >Gallery</a
     >
     <img
@@ -39,22 +39,22 @@ const { title } = Astro.props;
 </html>
 
 <script is:inline>
-  const colorSchema = window.matchMedia("(prefers-color-scheme: dark)");
-  const prefersDark = colorSchema.matches;
-  const preferTheme = () => {
-    !localStorage.getItem("globalTheme") &&
-      localStorage.setItem("globalTheme", prefersDark ? "dark" : "light");
-    const setting = localStorage.getItem("globalTheme");
-    if (setting === "dark" || (prefersDark && setting !== "light"))
-      document.documentElement.classList.toggle("dark", true);
+  // const colorSchema = window.matchMedia("(prefers-color-scheme: dark)");
+  // const prefersDark = colorSchema.matches;
+  // const preferTheme = () => {
+  //   !localStorage.getItem("globalTheme") &&
+  //     localStorage.setItem("globalTheme", prefersDark ? "dark" : "light");
+  //   const setting = localStorage.getItem("globalTheme");
+  //   if (setting === "dark" || (prefersDark && setting !== "light"))
+  //     document.documentElement.classList.toggle("dark", true);
 
-    colorSchema.addEventListener("change", () => {
-      document.documentElement.classList.toggle("dark", colorSchema.matches);
-      localStorage.setItem(
-        "globalTheme",
-        colorSchema.matches ? "dark" : "light"
-      );
-    });
-  };
-  preferTheme();
+  //   colorSchema.addEventListener("change", () => {
+  //     document.documentElement.classList.toggle("dark", colorSchema.matches);
+  //     localStorage.setItem(
+  //       "globalTheme",
+  //       colorSchema.matches ? "dark" : "light"
+  //     );
+  //   });
+  // };
+  // preferTheme();
 </script>
