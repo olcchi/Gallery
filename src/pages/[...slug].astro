@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import WorkLayout from "@layouts/workLayout.astro";
-import ModalImage from "@components/modalImage.astro";
+import ModalImage from "@components/imgs/modalImage.astro";
 import { getWorks } from "../scripts/_getWorks";
 export async function getStaticPaths() {
   const pages = [
@@ -86,6 +86,8 @@ const photos = splitPhotosIntoColumns(picList, columns);
 </WorkLayout>
 
 <script>
+  const CLASS_HIDDEN = "hidden";
+  const CLASS_OPACITY_0 = "opacity-0";
   const imgs: HTMLImageElement[] = Array.from(
     document.querySelectorAll(".flowImage")
   )!;
@@ -102,12 +104,13 @@ const photos = splitPhotosIntoColumns(picList, columns);
     document.body.style.overflow = "auto";
     modalImg.src = "";
   });
-  modalImageWrapper!.addEventListener("wheel", (e) => {
-    e.preventDefault();
-  });
-  modalImageWrapper!.addEventListener("touchmove", (e) => {
-    e.preventDefault();
-  });
+  modalImageWrapper.addEventListener(
+    "wheel touchmove",
+    (e) => {
+      e.preventDefault();
+    },
+    { passive: false }
+  );
   // img fade in
   imgs.forEach((img, I) => {
     img!.classList.add("opacity-0");
@@ -155,12 +158,54 @@ const photos = splitPhotosIntoColumns(picList, columns);
     }
     curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
   };
-  prev.addEventListener("click", () => {
-    imageController("prev");
+
+  const debounce = (func: Function, delay: number) => {
+    let timeout: number;
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  prev.addEventListener(
+    "click",
+    debounce(() => imageController("prev"), 100)
+  );
+  next.addEventListener(
+    "click",
+    debounce(() => imageController("next"), 100)
+  );
+
+  const updateModalImage = (index: number) => {
+    modalImg.classList.add("opacity-0");
+    setTimeout(() => {
+      modalImg.src = imgs[index].dataset.src!;
+      modalImg.onload = () => {
+        modalImg.classList.remove("opacity-0");
+      };
+    }, 100);
+    curImage.innerHTML = `${index + 1} of ${imgs.length}`;
+  };
+
+  document.querySelector(".grid")?.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains("flowImage")) {
+      const index = imgs.indexOf(target as HTMLImageElement);
+      if (index !== -1) {
+        modalImg.src = target.dataset.src!;
+        modalImageWrapper.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+        curIndex = index;
+        updatePrevNextState();
+        updateModalImage(curIndex);
+      }
+    }
   });
-  next.addEventListener("click", () => {
-    imageController("next");
-  });
+
+  const updatePrevNextState = () => {
+    prev.classList.toggle("disabled", curIndex === 0);
+    next.classList.toggle("disabled", curIndex === imgs.length - 1);
+  };
 </script>
 
 <style is:global>
