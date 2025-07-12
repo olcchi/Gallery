@@ -1,8 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import WorkLayout from "@layouts/workLayout.astro";
-import ModalImage from "@components/imgs/modalImage.astro";
+import WaterfallGallery from "@components/WaterfallGallery.astro";
 import { getWorks } from "../scripts/_getWorks";
+import type { GalleryImage } from "../types/gallery";
+
 export async function getStaticPaths() {
   const pages = [
     {
@@ -39,177 +40,15 @@ const { work, route } = Astro.props;
 const _href = Astro.url.origin;
 const picList = await getWorks(work as any, _href);
 
-const columns = 4;
-function splitPhotosIntoColumns(photos: any[], columns: number): any[][] {
-  const result = new Array(columns).fill(null).map((): any[] => []);
-
-  photos.forEach((photo, index) => {
-    const column = index % columns;
-    result[column].push(photo);
-  });
-
-  return result;
-}
-const photos = splitPhotosIntoColumns(picList, columns);
+// 转换为类型安全的图片数组
+const images: GalleryImage[] = picList.map((p: any) => ({
+  url: p.url,
+  alt: "Image",
+}));
 ---
 
 <WorkLayout title={route}>
-  <main class="workWrapper prose">
-    <div class="modalImageWrapper hidden transition-opacity ease">
-      <ModalImage />
-    </div>
-    <div class="grid grid-cols-4 gap-2 mb-25">
-      {
-        photos.map((l) => {
-          return (
-            <div class="w-full flex flex-col gap-2">
-              {l.map((p: any) => {
-                return (
-                  <Image
-                    class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
-                    inferSize={true}
-                    data-src={p.url}
-                    src={p.url}
-                    format={"webp"}
-                    loading={"lazy"}
-                    quality={100}
-                    alt="Image"
-                  />
-                );
-              })}
-            </div>
-          );
-        })
-      }
-    </div>
+  <main class="workWrapper">
+    <WaterfallGallery images={images} />
   </main>
 </WorkLayout>
-
-<script>
-  const CLASS_HIDDEN = "hidden";
-  const CLASS_OPACITY_0 = "opacity-0";
-  const imgs: HTMLImageElement[] = Array.from(
-    document.querySelectorAll(".flowImage")
-  )!;
-  const modalImageWrapper: HTMLImageElement =
-    document.querySelector(".modalImageWrapper")!;
-  const modalImg: HTMLImageElement = document.querySelector(".modalImg")!;
-  const returnTo = document.querySelector(".returnTo")!;
-  const prev = document.querySelector(".prev")!;
-  const next = document.querySelector(".next")!;
-  const curImage = document.querySelector(".curImage")!;
-  let curIndex;
-  returnTo.addEventListener("click", () => {
-    modalImageWrapper.classList.add("hidden");
-    document.body.style.overflow = "auto";
-    modalImg.src = "";
-  });
-  modalImageWrapper.addEventListener(
-    "wheel touchmove",
-    (e) => {
-      e.preventDefault();
-    },
-    { passive: false }
-  );
-  // img fade in
-  imgs.forEach((img, I) => {
-    img!.classList.add("opacity-0");
-    const _img = new Image();
-    _img.src = img.src;
-    _img.onload = () => {
-      img!.classList.remove("opacity-0");
-    };
-    // modal img trigger
-    img!.addEventListener("click", () => {
-      modalImg.src = img.dataset.src!;
-      modalImageWrapper.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-      curIndex = I;
-      curIndex === 0
-        ? prev.classList.add("disabled")
-        : prev.classList.remove("disabled");
-      curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
-    });
-  });
-
-  const imageController = (direction: "prev" | "next") => {
-    if (direction === "prev" ? curIndex > 0 : curIndex < imgs.length - 1) {
-      modalImg.classList.add("opacity-0");
-      direction === "prev" ? curIndex-- : curIndex++;
-      setTimeout(() => {
-        modalImg.src = imgs[curIndex].dataset.src!;
-      }, 100);
-      curIndex === 0
-        ? prev.classList.add("disabled")
-        : prev.classList.remove("disabled");
-      modalImg.onload = () => {
-        modalImg.classList.remove("opacity-0");
-      };
-    } else {
-      modalImg.classList.add("opacity-0");
-      prev.classList.add("disabled");
-      curIndex = 0;
-      setTimeout(() => {
-        modalImg.src = imgs[curIndex].dataset.src!;
-      }, 100);
-      modalImg.onload = () => {
-        modalImg.classList.remove("opacity-0");
-      };
-    }
-    curImage.innerHTML = `${curIndex + 1} of ${imgs.length}`;
-  };
-
-  const debounce = (func: Function, delay: number) => {
-    let timeout: number;
-    return (...args: any[]) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), delay);
-    };
-  };
-
-  prev.addEventListener(
-    "click",
-    debounce(() => imageController("prev"), 100)
-  );
-  next.addEventListener(
-    "click",
-    debounce(() => imageController("next"), 100)
-  );
-
-  const updateModalImage = (index: number) => {
-    modalImg.classList.add("opacity-0");
-    setTimeout(() => {
-      modalImg.src = imgs[index].dataset.src!;
-      modalImg.onload = () => {
-        modalImg.classList.remove("opacity-0");
-      };
-    }, 100);
-    curImage.innerHTML = `${index + 1} of ${imgs.length}`;
-  };
-
-  document.querySelector(".grid")?.addEventListener("click", (e) => {
-    const target = e.target as HTMLElement;
-    if (target.classList.contains("flowImage")) {
-      const index = imgs.indexOf(target as HTMLImageElement);
-      if (index !== -1) {
-        modalImg.src = target.dataset.src!;
-        modalImageWrapper.classList.remove("hidden");
-        document.body.style.overflow = "hidden";
-        curIndex = index;
-        updatePrevNextState();
-        updateModalImage(curIndex);
-      }
-    }
-  });
-
-  const updatePrevNextState = () => {
-    prev.classList.toggle("disabled", curIndex === 0);
-    next.classList.toggle("disabled", curIndex === imgs.length - 1);
-  };
-</script>
-
-<style is:global>
-  .prev.disabled {
-    @apply line-through!;
-  }
-</style>
