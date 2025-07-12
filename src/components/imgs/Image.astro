@@ -13,6 +13,7 @@ const { coverUrl, placeholderUrl } = Astro.props;
   <AstroImage
     alt="cover"
     width={600}
+    height={400}
     class="coverImage transition-all z-0"
     format={"webp"}
     src={coverUrl}
@@ -22,6 +23,7 @@ const { coverUrl, placeholderUrl } = Astro.props;
   <AstroImage
     alt="placeholder"
     width={600}
+    height={400}
     class="placeholderImage transition-all absolute top-0 left-0 z-10"
     format={"webp"}
     src={placeholderUrl}
