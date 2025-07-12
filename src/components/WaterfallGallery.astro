@@ -1,0 +1,76 @@
+---
+import { Image } from "astro:assets";
+import ModalImage from "./imgs/modalImage.astro";
+import type { GalleryImage } from "../types/gallery";
+
+interface Props {
+  images: GalleryImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="modalImageWrapper hidden transition-opacity ease">
+  <ModalImage />
+</div>
+
+<div class="waterfall-container mb-25" id="waterfall">
+  {
+    images.map((image: GalleryImage, index: number) => {
+      return (
+        <div
+          class="waterfall-item"
+          data-index={index}
+          style="opacity: 0; position: absolute;"
+        >
+          <Image
+            class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
+            inferSize={true}
+            data-src={image.url}
+            src={image.url}
+            format={"webp"}
+            loading={"lazy"}
+            quality={100}
+            alt={image.alt || "Image"}
+          />
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  import { createWaterfallLayout } from "../scripts/WaterfallLayout";
+  import { ModalController } from "../scripts/ModalController";
+  import type { GalleryImage } from "../types/gallery";
+
+  // 从 DOM 中获取图片数据
+  const waterfallItems = document.querySelectorAll(".waterfall-item");
+  const images: GalleryImage[] = Array.from(waterfallItems).map((item) => {
+    const img = item.querySelector("img") as HTMLImageElement;
+    return {
+      url: img.dataset.src || img.src,
+      alt: img.alt,
+    };
+  });
+
+  // 初始化瀑布流
+  const waterfall = createWaterfallLayout({
+    containerId: "waterfall",
+    columnCount: 4,
+    gap: 8,
+  });
+
+  // 初始化模态框控制器
+  const modalController = new ModalController(images);
+
+  // 清理函数
+  window.addEventListener("beforeunload", () => {
+    waterfall.destroy();
+    modalController.destroy();
+  });
+</script>
+
+<style>
+  @import "../styles/waterfall.css";
+</style>

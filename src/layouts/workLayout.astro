@@ -2,6 +2,7 @@
 import Header from "@components/navigator/header.astro";
 import Mask from "@components/navigator/mask.astro";
 // import Noise from "@components/noise.astro";
+import { themeScript } from "@scripts/themeController";
 import "../styles/main.css";
 interface Props {
   title?: string;
@@ -21,36 +22,18 @@ const { title } = Astro.props;
   </head>
   <body class="themeBase">
     <!-- <Noise /> -->
-    <main class="grid grid-cols-[1fr_min(65ch,90%)_1fr] relative">
-      <div class="fixed z-40 w-full">
+    <main class="relative">
+      <div class="fixed z-40 top-0 w-full">
         <Header />
       </div>
       <div class="fixed bottom-0 z-30">
         <Mask />
       </div>
-      <article class="flex flex-col col-start-2 col-end-3 mt-20">
+      <article class="mx-auto mt-20" style="width: min(90ch, 95vw);">
         <slot />
       </article>
     </main>
   </body>
 </html>
 
-<script is:inline>
-  const colorSchema = window.matchMedia("(prefers-color-scheme: dark)");
-  const prefersDark = colorSchema.matches;
-  const preferTheme = () => {
-    !localStorage.getItem("globalTheme") &&
-      localStorage.setItem("globalTheme", prefersDark ? "dark" : "light");
-    const setting = localStorage.getItem("globalTheme");
-    if (setting === "dark" || (prefersDark && setting !== "light"))
-      document.documentElement.classList.toggle("dark", true);
-    colorSchema.addEventListener("change", () => {
-      document.documentElement.classList.toggle("dark", colorSchema.matches);
-      localStorage.setItem(
-        "globalTheme",
-        colorSchema.matches ? "dark" : "light"
-      );
-    });
-  };
-  preferTheme();
-</script>
+<script is:inline set:html={themeScript} />

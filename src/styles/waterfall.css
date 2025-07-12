@@ -1,0 +1,28 @@
+.waterfall-container {
+  position: relative;
+  margin: 0 auto;
+  display: block;
+}
+
+.waterfall-item {
+  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+}
+
+.waterfall-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.prev.disabled,
+.next.disabled {
+  @apply opacity-30 cursor-not-allowed;
+}
+
+@media (max-width: 640px) {
+  .waterfall-container {
+    padding: 0 10px;
+  }
+} 

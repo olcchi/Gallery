@@ -8,29 +8,31 @@ const sliceWorkList = workList.slice(0, 3);
 
 <GalleryLayout title={"Gallery - yi"}>
   <main class="slide-in">
-    <section id="workCatalog" class="flex flex-col gap-2">
-      <p class="w-48 font-serif text-xl text-white! select-none">Work</p>
+    <section id="workCatalog" class="flex flex-col items-center gap-2">
+      <p class="font-serif text-xl text-[#71604F] select-none">Work</p>
       {
         sliceWorkList.map((work) => {
           return (
-            <div id="work-item" class="relative h-full w-80 flex items-center">
+            <div
+              id="work-item"
+              class="relative h-full w-80 flex justify-center text-[#71604F]  items-center"
+            >
               <a
                 href={`/${work.workName.replace(/ /g, "_")}`}
                 id="workName"
-                class="decoration-none text-white! font-serif!  "
+                class="decoration-none font-serif!  "
               >
                 {work.workName}
               </a>
-              <i
-                id="caret"
-                class="i-carbon-caret-right p-2 opacity-30 text-white"
-              />
+              <i id="caret" class="i-carbon-caret-right p-2 opacity-30" />
             </div>
           );
         })
       }
-      <div class="w-48 font-serif border-t pt-1 border-gray-2">
-        <a class="text-white hover:opacity-80" href="/cv"> · CV </a>
+      <div
+        class="w-48 font-serif flex justify-center border-t pt-1 border-[#71604F]"
+      >
+        <a class="hover:opacity-80 text-[#71604F]" href="/cv"> · CV </a>
       </div>
     </section>
   </main>
