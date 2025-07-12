@@ -1,9 +1,10 @@
 ---
 import GalleryLayout from "@layouts/galleryLayout.astro";
-import { getWorks } from "../scripts/_getWorks";
-const _href = Astro.request.url;
-const workList = await getWorks("all", _href);
-const sliceWorkList = workList.slice(0, 3);
+import { getWorkById } from "../utils/dataService";
+
+// 直接从数据服务获取所有工作数据
+const workList = await getWorkById("all");
+const sliceWorkList = Array.isArray(workList) ? workList.slice(0, 3) : [];
 ---
 
 <GalleryLayout title={"Gallery - yi"}>

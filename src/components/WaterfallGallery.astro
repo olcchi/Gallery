@@ -17,22 +17,39 @@ const { images } = Astro.props;
 <div class="waterfall-container mb-25" id="waterfall">
   {
     images.map((image: GalleryImage, index: number) => {
+      // 检查是否是本地图片
+      const isLocalImage = image.url.startsWith("/");
+
       return (
         <div
           class="waterfall-item"
           data-index={index}
           style="opacity: 0; position: absolute;"
         >
-          <Image
-            class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
-            inferSize={true}
-            data-src={image.url}
-            src={image.url}
-            format={"webp"}
-            loading={"lazy"}
-            quality={100}
-            alt={image.alt || "Image"}
-          />
+          {isLocalImage ? (
+            <Image
+              class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
+              width={400}
+              height={300}
+              data-src={image.url}
+              src={image.url}
+              format={"webp"}
+              loading={"lazy"}
+              quality={100}
+              alt={image.alt || "Image"}
+            />
+          ) : (
+            <Image
+              class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
+              inferSize={true}
+              data-src={image.url}
+              src={image.url}
+              format={"webp"}
+              loading={"lazy"}
+              quality={100}
+              alt={image.alt || "Image"}
+            />
+          )}
         </div>
       );
     })

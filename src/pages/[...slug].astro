@@ -1,7 +1,7 @@
 ---
 import WorkLayout from "@layouts/workLayout.astro";
 import WaterfallGallery from "@components/WaterfallGallery.astro";
-import { getWorks } from "../scripts/_getWorks";
+import { getWorkById } from "../utils/dataService";
 import type { GalleryImage } from "../types/gallery";
 
 export async function getStaticPaths() {
@@ -37,14 +37,16 @@ export async function getStaticPaths() {
 
 const { work, route } = Astro.props;
 
-const _href = Astro.url.origin;
-const picList = await getWorks(work as any, _href);
+// 直接从数据服务获取数据，避免循环依赖
+const picList = await getWorkById(work);
 
 // 转换为类型安全的图片数组
-const images: GalleryImage[] = picList.map((p: any) => ({
-  url: p.url,
-  alt: "Image",
-}));
+const images: GalleryImage[] = Array.isArray(picList)
+  ? picList.map((p: any) => ({
+      url: p.url || "/paper.png",
+      alt: p.alt || "Image",
+    }))
+  : [];
 ---
 
 <WorkLayout title={route}>
