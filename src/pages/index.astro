@@ -10,30 +10,35 @@ const sliceWorkList = Array.isArray(workList) ? workList.slice(0, 3) : [];
 <GalleryLayout title={"Gallery - yi"}>
   <main class="slide-in">
     <section id="workCatalog" class="flex flex-col items-center gap-2">
-      <p class="font-serif text-xl text-[#71604F] select-none">Work</p>
+      <p class="font-mono font-bold text-lg text-[#1C1C1C] italic select-none">
+        Work
+      </p>
       {
         sliceWorkList.map((work) => {
           return (
             <div
               id="work-item"
-              class="relative h-full w-80 flex justify-center text-[#71604F]  items-center"
+              class="relative h-full flex justify-center gap-2 text-[#1C1C1C] text-xs font-bold font-mono italic items-center"
             >
+              <p id="caret" class=" opacity-30 text-[#1C1C1C]">
+                -
+              </p>
               <a
                 href={`/${work.workName.replace(/ /g, "_")}`}
                 id="workName"
-                class="decoration-none font-serif!  "
+                class="decoration-none "
               >
                 {work.workName}
               </a>
-              <i id="caret" class="i-carbon-caret-right p-2 opacity-30" />
             </div>
           );
         })
       }
       <div
-        class="w-48 font-serif flex justify-center border-t pt-1 border-[#71604F]"
+        class="cvLink w-48 flex justify-center font-mono text-xs font-bold italic border-t pt-1 border-[#1C1C1C] items-center gap-2"
       >
-        <a class="hover:opacity-80 text-[#71604F]" href="/cv"> · CV </a>
+        <p id="caret" class="opacity-30 text-[#1C1C1C]">-</p>
+        <a class="hover:opacity-80 text-[#1C1C1C]" href="/cv">CV </a>
       </div>
     </section>
   </main>
@@ -44,6 +49,9 @@ const sliceWorkList = Array.isArray(workList) ? workList.slice(0, 3) : [];
     content: "· ";
   }
   #work-item:hover #caret {
+    @apply opacity-100!;
+  }
+  .cvLink:hover #caret {
     @apply opacity-100!;
   }
 </style>
