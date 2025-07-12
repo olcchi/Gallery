@@ -5,8 +5,8 @@ import {
   presetTypography,
   presetUno,
   presetWebFonts,
+  transformerDirectives,
 } from 'unocss'
-import transformerDirectives from '@unocss/transformer-directives'
 
 export default defineConfig({
 
@@ -20,6 +20,7 @@ export default defineConfig({
         fonts: {
           sans: 'Satoshi',
           serif: 'Telma',
+          mono: 'Erode',
         },
       },
     ),
