@@ -3,7 +3,7 @@ type works = 'all' | 'tu' | 'al' | 'un'
 export async function getWorks(workName: works, _href: string) {
   try {
     const href = import.meta.env.PROD
-      ? 'https://yigallery.netlify.app/'
+      ? 'https://gallerzz.vercel.app/'
       : _href
     
     const url = workName === 'all' ? `${href}all.json` : `${href}/${workName}.json`
