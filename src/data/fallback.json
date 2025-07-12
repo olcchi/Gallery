@@ -1,0 +1,37 @@
+{
+    "records": [
+        {
+            "workName": "Turpan",
+            "coverImage": "/paper.png",
+            "placeHolderImage": "/paper.png",
+            "picture": [
+                {
+                    "url": "/paper.png",
+                    "alt": "Turpan Gallery Image"
+                }
+            ]
+        },
+        {
+            "workName": "Unnoticed",
+            "coverImage": "/paper.png",
+            "placeHolderImage": "/paper.png",
+            "picture": [
+                {
+                    "url": "/paper.png",
+                    "alt": "Unnoticed Gallery Image"
+                }
+            ]
+        },
+        {
+            "workName": "Another Landscape",
+            "coverImage": "/paper.png",
+            "placeHolderImage": "/paper.png",
+            "picture": [
+                {
+                    "url": "/paper.png",
+                    "alt": "Another Landscape Gallery Image"
+                }
+            ]
+        }
+    ]
+}
