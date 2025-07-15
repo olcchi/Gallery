@@ -75,7 +75,7 @@ const pages = [
             href={`/${p.slug}`}
             class:list={[
               "p-2",
-              " font-sans font-thin italic",
+              " font-mono text-xs font-bold italic",
               {
                 "opacity-30 hover:opacity-50": !Astro.url.pathname.includes(
                   p.slug
@@ -88,6 +88,26 @@ const pages = [
         );
       })
     }
+    <div class="w-50 flex flex-col gap-2 mt-2 items-center">
+      <hr class="w-32 opacity-30" />
+      <a
+        href="/"
+        class:list={[
+          "p-2",
+          "font-mono text-xs font-bold italic opacity-30 hover:opacity-50",
+        ]}
+      >
+        Catalog
+      </a>
+      <a
+        href="/cv"
+        class:list={[
+          "font-mono text-xs font-bold italic opacity-30 hover:opacity-50",
+        ]}
+      >
+        CV</a
+      >
+    </div>
   </div>
 </div>
 <div></div>
