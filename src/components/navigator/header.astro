@@ -31,13 +31,15 @@ const pages = [
     class="hidden! md:block! opacity-100 hover:opacity-30 col-span-2 w-min flex justify-center"
     href="/"
   >
-    <div class="flex justify-center items-center font-mono text-xs italic">
+    <div
+      class="flex justify-center items-center font-mono text-xs font-bold italic"
+    >
       <i class="i-mdi-chevron-left inline-block"></i>
       <p class="inline-block">Catalog</p>
     </div>
   </a>
   <div
-    class="flex items-center justify-center col-span-4 font-mono text-xs italic text-xs"
+    class="flex items-center justify-center col-span-4 font-mono text-xs font-bold italic text-xs"
   >
     {
       pages.map((p) => {
