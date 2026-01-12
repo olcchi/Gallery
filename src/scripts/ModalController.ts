@@ -76,11 +76,18 @@ export class ModalController {
   private openModal(index: number) {
     this.currentIndex = index;
     const img = document.querySelectorAll(".flowImage")[index] as HTMLImageElement;
-    this.modalImg.src = img.dataset.src!;
+    
+    // 优化：优先使用当前已加载的图片（缩略图/WebP），利用浏览器缓存实现瞬间显示
+    const cachedSrc = img.currentSrc || img.src;
+    this.modalImg.src = cachedSrc;
+    
     this.modalImageWrapper.classList.remove("hidden");
     document.body.style.overflow = "hidden";
     this.updatePrevNextState();
     this.curImage.innerHTML = `${this.currentIndex + 1} of ${this.images.length}`;
+
+    // 渐进式加载：在后台加载原图，加载完成后替换，提升清晰度
+    this.loadHighResImage(index);
   }
 
   private closeModal() {
@@ -107,12 +114,40 @@ export class ModalController {
     this.modalImg.style.opacity = "0";
     setTimeout(() => {
       const img = document.querySelectorAll(".flowImage")[index] as HTMLImageElement;
-      this.modalImg.src = img.dataset.src!;
+      
+      // 优化：同样优先显示已缓存的缩略图
+      const cachedSrc = img.currentSrc || img.src;
+      this.modalImg.src = cachedSrc;
+      
       this.modalImg.onload = () => {
         this.modalImg.style.opacity = "1";
+        // 缩略图显示后，再尝试加载原图
+        this.loadHighResImage(index);
       };
     }, 100);
     this.curImage.innerHTML = `${index + 1} of ${this.images.length}`;
+  }
+
+  /**
+   * 渐进式加载原图
+   * 如果 dataset.src (原图) 与当前显示的图片不同，则在后台加载并替换
+   */
+  private loadHighResImage(index: number) {
+    const img = document.querySelectorAll(".flowImage")[index] as HTMLImageElement;
+    const originalSrc = img.dataset.src;
+    
+    if (!originalSrc) return;
+
+    // 创建临时对象加载原图
+    const highResImg = new Image();
+    highResImg.src = originalSrc;
+    
+    highResImg.onload = () => {
+      // 确保用户仍然在查看同一张图片（避免快速切换时旧图覆盖新图）
+      if (this.currentIndex === index) {
+        this.modalImg.src = originalSrc;
+      }
+    };
   }
 
   private updatePrevNextState() {
