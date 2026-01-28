@@ -72,8 +72,10 @@ export async function fetchWorkData() {
       throw new Error('Invalid API response format')
     }
 
-    // 缓存数据
-    cachedData = workData.data.records.map(i => i.fields)
+    // 缓存数据，排除特定的项目
+    cachedData = workData.data.records
+      .map(i => i.fields)
+      .filter(field => field.workName !== 'Never Know How Much I Love You')
     cacheTimestamp = now
     console.log('Work data fetched successfully')
     
@@ -104,8 +106,9 @@ export async function getWorkById(workId: string) {
   
   if (index === 4) {
     // 返回所有工作的概览
-    return workRecords.map(({ workName, coverImage, placeHolderImage }) => ({ 
+    return workRecords.map(({ workName, year, coverImage, placeHolderImage }) => ({ 
       workName, 
+      year,
       coverImage, 
       placeHolderImage 
     }))

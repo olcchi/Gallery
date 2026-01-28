@@ -1,6 +1,7 @@
 ---
-import Noise from "@components/noise.astro";
 import { themeScript } from "@scripts/themeController";
+import { ViewTransitions } from "astro:transitions";
+import "../styles/main.css";
 interface Props {
   title?: string;
 }
@@ -8,28 +9,47 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <script is:inline set:html={themeScript} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" href="/icon.png" />
+    <ViewTransitions />
   </head>
-  <body class="bg-white flex justify-center items-center">
-    <Noise />
-    <a
-      href="/"
-      class="text-[#1C1C1C] font-mono font-bold italic fixed top-5 left-5 cursor-pointer!"
-      >Gallery</a
+  <body
+    class="bg-white font-mono text-black dark:bg-[#050505] dark:text-[#Eaeaea] min-h-screen transition-colors duration-300"
+  >
+    <header
+      class="fixed top-0 left-0 w-full z-50 flex justify-between items-baseline px-6 py-4 md:px-8 md:py-5 text-white mix-blend-difference"
     >
+      <a
+        href="/"
+        class="text-base md:text-base font-bold hover:opacity-70 transition-opacity"
+      >
+        yi
+      </a>
+
+      <nav class="flex gap-6 lg:gap-8 text-xs font-bold">
+        <a href="/" class="hover:text-gray-400 transition-colors">project</a>
+        <a href="/cv" class="hover:text-gray-400 transition-colors">cv</a>
+        <a
+          href="mailto:[earthb0y@outlook.com]"
+          target="_blank"
+          class="hover:text-gray-400 transition-colors">contact</a
+        >
+      </nav>
+    </header>
+
     <img
       src="/paper.png"
       alt=""
-      class="fixed w-100 opacity-100 -z-10 select-none!"
+      class="fixed w-full h-full object-cover opacity-5 pointer-events-none -z-10 mix-blend-overlay"
     />
-    <main class="h-100dvh flex flex-col justify-center">
+
+    <main class="w-full pt-24 px-6 md:px-8 pb-16">
       <slot />
     </main>
   </body>
 </html>
-
-<script is:inline set:html={themeScript} />

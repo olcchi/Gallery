@@ -2,6 +2,7 @@
     "records": [
         {
             "workName": "Turpan",
+            "year": "ongoing",
             "coverImage": "/paper.png",
             "placeHolderImage": "/paper.png",
             "picture": [
@@ -13,6 +14,7 @@
         },
         {
             "workName": "Unnoticed",
+            "year": "2020",
             "coverImage": "/paper.png",
             "placeHolderImage": "/paper.png",
             "picture": [
@@ -24,6 +26,7 @@
         },
         {
             "workName": "Another Landscape",
+            "year": "2020",
             "coverImage": "/paper.png",
             "placeHolderImage": "/paper.png",
             "picture": [

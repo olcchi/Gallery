@@ -15,44 +15,32 @@ const pages = [
     work: "al",
     route: "Another Landscape",
   },
-  // {
-  //   slug: 'Never_Know_How_Much_I_Love_You',
-  //   work: 'ne',
-  //   route: 'Never Know How Much I Love You',
-  // },
 ];
 ---
 
-<div
-  class="header flex items-center md:grid md:grid-cols-8 md:min-w-65ch md:max-w-65ch mx-auto w-full md:justify-center justify-between gap-4 p-5 font-sans font-thin italic transition-opacity ease"
+<header
+  class="fixed top-0 left-0 w-full z-50 flex justify-between items-baseline px-6 py-4 md:px-8 md:py-5 text-white mix-blend-difference"
 >
-  <!-- <a class="i-mdi-chevron-left text-xl hidden md:block opacity-30 hover:opacity-100 col-span-2" href="/"/> -->
   <a
-    class="hidden! md:block! opacity-100 hover:opacity-30 col-span-2 w-min flex justify-center"
     href="/"
+    class="group flex items-center gap-1.5 font-sm font-bold hover:opacity-70 transition-opacity"
   >
-    <div
-      class="flex justify-center items-center font-mono text-xs font-bold italic"
-    >
-      <i class="i-mdi-chevron-left inline-block"></i>
-      <p class="inline-block">Catalog</p>
-    </div>
+    <i class="i-ph-arrow-left transition-transform group-hover:-translate-x-1"
+    ></i>
+    Projects
   </a>
-  <div
-    class="flex items-center justify-center col-span-4 font-mono text-xs font-bold italic text-xs"
-  >
+
+  <nav class="flex gap-6 lg:gap-8 text-xs font-bold">
     {
       pages.map((p) => {
         return (
           <a
             href={`/${p.slug}`}
             class:list={[
-              "p-2",
-              "tabItem",
-              "z-20",
+              "hover:text-gray-400 transition-colors",
               {
-                "hidden md:block md:opacity-30 md:hover:opacity-50":
-                  !Astro.url.pathname.includes(p.slug),
+                "text-gray-500 pointer-events-none":
+                  Astro.url.pathname.includes(p.slug),
               },
             ]}
           >
@@ -61,133 +49,5 @@ const pages = [
         );
       })
     }
-  </div>
-  <div class="catalogToggle md:hidden relative w-5 h-4 mr-2 z-40">
-    <span class="stroke"></span>
-    <span class="stroke"></span>
-    <span class="stroke"></span>
-  </div>
-</div>
-<div class="catalog">
-  <div class="flex flex-col items-center w-full mt-20">
-    {
-      pages.map((p) => {
-        return (
-          <a
-            href={`/${p.slug}`}
-            class:list={[
-              "p-2",
-              " font-mono text-xs font-bold italic",
-              {
-                "opacity-30 hover:opacity-50": !Astro.url.pathname.includes(
-                  p.slug
-                ),
-              },
-            ]}
-          >
-            {p.route}
-          </a>
-        );
-      })
-    }
-    <div class="w-50 flex flex-col gap-2 mt-2 items-center">
-      <hr class="w-32 opacity-30" />
-      <a
-        href="/"
-        class:list={[
-          "p-2",
-          "font-mono text-xs font-bold italic opacity-30 hover:opacity-50",
-        ]}
-      >
-        Catalog
-      </a>
-      <a
-        href="/cv"
-        class:list={[
-          "font-mono text-xs font-bold italic opacity-30 hover:opacity-50",
-        ]}
-      >
-        CV</a
-      >
-    </div>
-  </div>
-</div>
-<div></div>
-<script>
-  const catalogToggle = document.querySelector(".catalogToggle")!;
-  const catalog = document.querySelector(".catalog")!;
-  const tabItems = document.querySelectorAll(".tabItem")!;
-  const header = document.querySelector(".header")!;
-  let catalogOpen = false;
-  catalog!.addEventListener("touchmove", (e) => {
-    if (catalogOpen) e.preventDefault();
-  });
-  catalog!.addEventListener("wheel", (e) => {
-    if (catalogOpen) e.preventDefault();
-  });
-  const toggleCatlog = () => {
-    catalogToggle!.classList.toggle("open");
-    catalog!.classList.toggle("open");
-    tabItems.forEach((i) => {
-      i!.classList.toggle("opacity-0");
-    });
-    catalogOpen = !catalogOpen;
-  };
-  catalogToggle!.addEventListener("click", toggleCatlog);
-  const md = 768;
-  window.addEventListener("resize", () => {
-    const curWidth = window.innerWidth;
-    if (curWidth > md) {
-      catalogToggle.classList.remove("open");
-      catalog.classList.remove("open");
-      tabItems.forEach((i) => {
-        i!.classList.remove("opacity-0");
-      });
-      catalogOpen = !catalogOpen;
-    }
-  });
-
-  let currentYPostion;
-  let isDown;
-  const dynamicNav = () => {
-    header.classList.toggle("opacity-0", isDown);
-  };
-  window.addEventListener("scroll", () => {
-    currentYPostion = window.scrollY;
-    isDown = currentYPostion > 20;
-    dynamicNav();
-  });
-</script>
-
-<style>
-  .stroke {
-    @apply h-0.5 w-5 bg-black dark:bg-white;
-  }
-  .catalogToggle .stroke:nth-child(1) {
-    @apply top-0;
-  }
-  .catalogToggle .stroke:nth-child(2) {
-    @apply top-2;
-  }
-  .catalogToggle .stroke:nth-child(3) {
-    @apply top-4;
-  }
-  .catalogToggle .stroke {
-    @apply absolute;
-  }
-  .catalogToggle.open .stroke:nth-child(1) {
-    @apply top-2 rotate-45;
-  }
-  .catalogToggle.open .stroke:nth-child(2) {
-    @apply top-2 translate-x-1 opacity-0;
-  }
-  .catalogToggle.open .stroke:nth-child(3) {
-    @apply top-2 -rotate-45;
-  }
-  .catalog {
-    @apply -translate-y-20 hidden opacity-0 bg-white fixed dark:bg-black;
-  }
-  .catalog.open {
-    @apply opacity-100 translate-y-0 flex flex-col items-center p-5 w-full h-screen top-0 md:hidden;
-  }
-</style>
+  </nav>
+</header>

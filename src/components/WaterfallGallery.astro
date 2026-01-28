@@ -61,31 +61,44 @@ const { images } = Astro.props;
   import { ModalController } from "../scripts/ModalController";
   import type { GalleryImage } from "../types/gallery";
 
-  // 从 DOM 中获取图片数据
-  const waterfallItems = document.querySelectorAll(".waterfall-item");
-  const images: GalleryImage[] = Array.from(waterfallItems).map((item) => {
-    const img = item.querySelector("img") as HTMLImageElement;
-    return {
-      url: img.dataset.src || img.src,
-      alt: img.alt,
-    };
-  });
+  function initWaterfall() {
+    const waterfallContainer = document.getElementById("waterfall");
+    if (!waterfallContainer) return;
 
-  // 初始化瀑布流
-  const waterfall = createWaterfallLayout({
-    containerId: "waterfall",
-    columnCount: 4,
-    gap: 8,
-  });
+    // 从 DOM 中获取图片数据
+    const waterfallItems =
+      waterfallContainer.querySelectorAll(".waterfall-item");
+    const images: GalleryImage[] = Array.from(waterfallItems).map((item) => {
+      const img = item.querySelector("img") as HTMLImageElement;
+      return {
+        url: img.dataset.src || img.src,
+        alt: img.alt,
+      };
+    });
 
-  // 初始化模态框控制器
-  const modalController = new ModalController(images);
+    // 初始化瀑布流
+    const waterfall = createWaterfallLayout({
+      containerId: "waterfall",
+      columnCount: 4,
+      gap: 8,
+    });
 
-  // 清理函数
-  window.addEventListener("beforeunload", () => {
-    waterfall.destroy();
-    modalController.destroy();
-  });
+    // 初始化模态框控制器
+    const modalController = new ModalController(images);
+
+    // 清理函数（针对 View Transitions 的 page-hide 或 before-swap）
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        waterfall.destroy();
+        modalController.destroy();
+      },
+      { once: true },
+    );
+  }
+
+  // 监听 Astro 页面加载事件
+  document.addEventListener("astro:page-load", initWaterfall);
 </script>
 
 <style>

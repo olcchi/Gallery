@@ -4,54 +4,78 @@ import { getWorkById } from "../utils/dataService";
 
 // 直接从数据服务获取所有工作数据
 const workList = await getWorkById("all");
-const sliceWorkList = Array.isArray(workList) ? workList.slice(0, 3) : [];
 ---
 
 <GalleryLayout title={"Gallery - yi"}>
-  <main class="slide-in">
-    <section id="workCatalog" class="flex flex-col items-center gap-2">
-      <p class="font-mono font-bold text-lg text-[#1C1C1C] italic select-none">
-        Work
-      </p>
-      {
-        sliceWorkList.map((work) => {
-          return (
-            <div
-              id="work-item"
-              class="relative h-full flex justify-center gap-2 text-[#1C1C1C] text-xs font-bold font-mono italic items-center"
-            >
-              <p id="caret" class=" opacity-30 text-[#1C1C1C]">
-                -
-              </p>
+  <main class="fade-in">
+    <section class="max-w-[1440px] mx-auto">
+      <h1 class="text-xl md:text-2xl font-bold mb-8 md:mb-12">Projects</h1>
+
+      <div
+        class="project-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10"
+      >
+        {
+          workList.map((work) => {
+            // Safely access the first image in the array if it exists
+            // Handle both API (array) and Fallback (string) data structures
+            const coverUrl = Array.isArray(work.coverImage)
+              ? work.coverImage.length > 0
+                ? work.coverImage[0].url
+                : ""
+              : work.coverImage;
+
+            return (
               <a
                 href={`/${work.workName.replace(/ /g, "_")}`}
-                id="workName"
-                class="decoration-none "
+                class="project-item group flex flex-col gap-2 cursor-pointer"
               >
-                {work.workName}
+                <div class="relative overflow-hidden bg-gray-1 dark:bg-[#1a1a1a] aspect-square w-full">
+                  {coverUrl && (
+                    <img
+                      src={coverUrl}
+                      alt={work.workName}
+                      class="w-full h-full object-cover brightness-75 group-hover:brightness-100 group-hover:scale-102 transition-all duration-700 ease-out"
+                    />
+                  )}
+                </div>
+
+                <div class="flex justify-between items-baseline mt-1">
+                  <h2 class="text-[13px] font-bold transition-colors">
+                    {work.workName}
+                  </h2>
+                  <span class="text-[10px] text-[#666] font-mono">
+                    {work.year || "2023"}
+                  </span>
+                </div>
               </a>
-            </div>
-          );
-        })
-      }
-      <div
-        class="cvLink w-32 flex justify-center font-mono text-xs font-bold italic border-t pt-1 border-[#1C1C1C] items-center gap-2"
-      >
-        <p id="caret" class="opacity-30 text-[#1C1C1C]">-</p>
-        <a class="hover:opacity-80 text-[#1C1C1C]" href="/cv">CV </a>
+            );
+          })
+        }
       </div>
     </section>
   </main>
 </GalleryLayout>
 
 <style>
-  .footerLink a:nth-child(2)::before {
-    content: "· ";
+  .project-item {
+    @apply transition-all duration-500 ease-in-out;
   }
-  #work-item:hover #caret {
-    opacity: 1 !important;
+
+  /* 当容器被悬停时，所有项目变暗 */
+  .project-grid:hover .project-item {
+    @apply opacity-30 grayscale-[0.5] brightness-75;
   }
-  .cvLink:hover #caret {
-    opacity: 1 !important;
+
+  /* 当前悬停的项目保持亮起 */
+  .project-grid:hover .project-item:hover {
+    @apply opacity-100 grayscale-0 brightness-100;
+  }
+
+  /* 针对文字的特殊处理，模仿用户提供的效果 */
+  .project-grid:hover .project-item h2 {
+    @apply text-gray-500;
+  }
+  .project-grid:hover .project-item:hover h2 {
+    @apply dark:text-[#Eaeaea] text-black font-bold;
   }
 </style>

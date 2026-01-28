@@ -1,8 +1,9 @@
 ---
 import Header from "@components/navigator/header.astro";
 import Mask from "@components/navigator/mask.astro";
-// import Noise from "@components/noise.astro";
+
 import { themeScript } from "@scripts/themeController";
+import { ViewTransitions } from "astro:transitions";
 import "../styles/main.css";
 interface Props {
   title?: string;
@@ -11,21 +12,27 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <script is:inline set:html={themeScript} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="referrer" content="no-referrer" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.png" />
+    <ViewTransitions />
   </head>
-  <body class="themeBase">
-    <!-- <Noise /> -->
+  <body
+    class="bg-white font-mono text-black dark:bg-[#050505] dark:text-[#Eaeaea] min-h-screen transition-colors duration-300"
+  >
+    <img
+      src="/paper.png"
+      alt=""
+      class="fixed w-full h-full object-cover opacity-5 pointer-events-none -z-10 mix-blend-overlay"
+    />
     <main class="relative">
-      <div class="fixed z-40 top-0 w-full">
-        <Header />
-      </div>
+      <Header />
       <div class="fixed bottom-0 z-30">
         <Mask />
       </div>
@@ -35,5 +42,3 @@ const { title } = Astro.props;
     </main>
   </body>
 </html>
-
-<script is:inline set:html={themeScript} />
