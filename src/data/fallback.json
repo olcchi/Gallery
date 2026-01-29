@@ -2,7 +2,8 @@
     "records": [
         {
             "workName": "Turpan",
-            "year": "ongoing",
+            "year": "2024",
+            "ongoing": true,
             "coverImage": "/paper.png",
             "placeHolderImage": "/paper.png",
             "picture": [

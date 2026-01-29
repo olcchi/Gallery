@@ -5,8 +5,7 @@ const { coverUrl, placeholderUrl } = Astro.props;
 
 <main class="catalogItem">
   <div
-    id="mask"
-    class="absolute w-full h-full backdrop-blur-md opacity-100 z-20 transition-all duration-500 ease-in-out"
+    class="mask absolute w-full h-full backdrop-blur-md opacity-100 z-20 transition-all duration-500 ease-in-out"
   >
   </div>
 
@@ -32,15 +31,15 @@ const { coverUrl, placeholderUrl } = Astro.props;
 </main>
 
 <script>
-  const workImage = document.querySelectorAll(".catalogItem");
-  console.log(workImage);
-  workImage.forEach((i) => {
-    const imageHigh = new Image();
-    const mask = i.children[0];
-    const cover = i.children[1];
-    const placeholder = i.children[2];
-    imageHigh.src = (cover as HTMLImageElement).src;
-    imageHigh.onload = () => {
+  const workImages = document.querySelectorAll(".catalogItem");
+  workImages.forEach((item) => {
+    const mask = item.querySelector(".mask");
+    const cover = item.querySelector(".coverImage") as HTMLImageElement;
+    const placeholder = item.querySelector(".placeholderImage");
+
+    if (!mask || !cover || !placeholder) return;
+
+    const handleLoad = () => {
       setTimeout(() => {
         cover.classList.remove("hidden");
         mask.classList.remove("opacity-100");
@@ -48,5 +47,11 @@ const { coverUrl, placeholderUrl } = Astro.props;
         placeholder.classList.add("hidden");
       }, 50);
     };
+
+    if (cover.complete) {
+      handleLoad();
+    } else {
+      cover.addEventListener("load", handleLoad);
+    }
   });
 </script>

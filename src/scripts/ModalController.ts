@@ -2,6 +2,7 @@ import type { GalleryImage } from '../types/gallery';
 
 export class ModalController {
   private images: GalleryImage[];
+  private flowImages: NodeListOf<HTMLImageElement>;
   private modalImageWrapper: HTMLElement;
   private modalImg: HTMLImageElement;
   private returnTo: HTMLElement;
@@ -18,6 +19,7 @@ export class ModalController {
     this.prev = document.querySelector(".prev")!;
     this.next = document.querySelector(".next")!;
     this.curImage = document.querySelector(".curImage")!;
+    this.flowImages = document.querySelectorAll(".flowImage");
 
     this.initializeEventListeners();
   }
@@ -29,17 +31,12 @@ export class ModalController {
     });
 
     // 阻止滚动
-    this.modalImageWrapper.addEventListener(
-      "wheel touchmove",
-      (e) => {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
+    const preventDefault = (e: Event) => e.preventDefault();
+    this.modalImageWrapper.addEventListener("wheel", preventDefault, { passive: false });
+    this.modalImageWrapper.addEventListener("touchmove", preventDefault, { passive: false });
 
     // 图片点击事件
-    const flowImages = document.querySelectorAll(".flowImage");
-    flowImages.forEach((img, index) => {
+    this.flowImages.forEach((img, index) => {
       img.addEventListener("click", () => {
         this.openModal(index);
       });
@@ -57,7 +54,7 @@ export class ModalController {
 
     // 键盘导航
     document.addEventListener("keydown", (e) => {
-      if (!this.modalImageWrapper.classList.contains("hidden")) {
+      if (this.modalImageWrapper.classList.contains("opacity-100")) {
         switch (e.key) {
           case "ArrowLeft":
             this.navigate("prev");
@@ -75,25 +72,34 @@ export class ModalController {
 
   private openModal(index: number) {
     this.currentIndex = index;
-    const img = document.querySelectorAll(".flowImage")[index] as HTMLImageElement;
+    const img = this.flowImages[index];
+    if (!img) return;
     
     // 优化：优先使用当前已加载的图片（缩略图/WebP），利用浏览器缓存实现瞬间显示
     const cachedSrc = img.currentSrc || img.src;
     this.modalImg.src = cachedSrc;
     
-    this.modalImageWrapper.classList.remove("hidden");
+    this.modalImageWrapper.classList.remove("opacity-0", "pointer-events-none");
+    this.modalImageWrapper.classList.add("opacity-100", "pointer-events-auto");
     document.body.style.overflow = "hidden";
     this.updatePrevNextState();
     this.curImage.innerHTML = `${this.currentIndex + 1} of ${this.images.length}`;
 
-    // 渐进式加载：在后台加载原图，加载完成后替换，提升清晰度
+    // 渐进式加载
     this.loadHighResImage(index);
   }
 
   private closeModal() {
-    this.modalImageWrapper.classList.add("hidden");
+    this.modalImageWrapper.classList.remove("opacity-100", "pointer-events-auto");
+    this.modalImageWrapper.classList.add("opacity-0", "pointer-events-none");
     document.body.style.overflow = "auto";
-    this.modalImg.src = "";
+    
+    // 等待过渡动画完成后清除图片
+    setTimeout(() => {
+      if (this.modalImageWrapper.classList.contains("opacity-0")) {
+        this.modalImg.src = "";
+      }
+    }, 300);
   }
 
   private navigate(direction: "prev" | "next") {
@@ -113,37 +119,30 @@ export class ModalController {
   private updateModalImage(index: number) {
     this.modalImg.style.opacity = "0";
     setTimeout(() => {
-      const img = document.querySelectorAll(".flowImage")[index] as HTMLImageElement;
+      const img = this.flowImages[index];
+      if (!img) return;
       
-      // 优化：同样优先显示已缓存的缩略图
       const cachedSrc = img.currentSrc || img.src;
       this.modalImg.src = cachedSrc;
       
       this.modalImg.onload = () => {
         this.modalImg.style.opacity = "1";
-        // 缩略图显示后，再尝试加载原图
         this.loadHighResImage(index);
       };
     }, 100);
     this.curImage.innerHTML = `${index + 1} of ${this.images.length}`;
   }
 
-  /**
-   * 渐进式加载原图
-   * 如果 dataset.src (原图) 与当前显示的图片不同，则在后台加载并替换
-   */
   private loadHighResImage(index: number) {
-    const img = document.querySelectorAll(".flowImage")[index] as HTMLImageElement;
-    const originalSrc = img.dataset.src;
+    const img = this.flowImages[index];
+    const originalSrc = img?.dataset.src;
     
     if (!originalSrc) return;
 
-    // 创建临时对象加载原图
     const highResImg = new Image();
     highResImg.src = originalSrc;
     
     highResImg.onload = () => {
-      // 确保用户仍然在查看同一张图片（避免快速切换时旧图覆盖新图）
       if (this.currentIndex === index) {
         this.modalImg.src = originalSrc;
       }
@@ -164,8 +163,6 @@ export class ModalController {
   }
 
   public destroy() {
-    // 清理事件监听器
-    // 注意：实际的清理需要保存原始的事件监听器引用
-    // 这里只是示例，实际使用时需要保存引用
+    // 实际清理逻辑...
   }
 } 

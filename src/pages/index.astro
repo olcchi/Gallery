@@ -34,7 +34,7 @@ const workList = await getWorkById("all");
                     <img
                       src={coverUrl}
                       alt={work.workName}
-                      class="w-full h-full object-cover brightness-75 group-hover:brightness-100 group-hover:scale-102 transition-all duration-700 ease-out"
+                      class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-102"
                     />
                   )}
                 </div>
@@ -45,6 +45,7 @@ const workList = await getWorkById("all");
                   </h2>
                   <span class="text-[10px] text-[#666] font-mono">
                     {work.year || "2023"}
+                    {work.ongoing ? " — ongoing" : ""}
                   </span>
                 </div>
               </a>
@@ -61,21 +62,27 @@ const workList = await getWorkById("all");
     @apply transition-all duration-500 ease-in-out;
   }
 
-  /* 当容器被悬停时，所有项目变暗 */
+  /* 默认保持明亮 (100% 亮度/不透明度) */
+  .project-item {
+    @apply opacity-100 grayscale-0 brightness-100;
+  }
+
+  /* 当容器被悬停时，所有项目变暗/变灰 */
   .project-grid:hover .project-item {
     @apply opacity-30 grayscale-[0.5] brightness-75;
   }
 
-  /* 当前悬停的项目保持亮起 */
+  /* 当前悬停的项目保持/恢复亮起 */
   .project-grid:hover .project-item:hover {
     @apply opacity-100 grayscale-0 brightness-100;
   }
 
-  /* 针对文字的特殊处理，模仿用户提供的效果 */
+  /* 文字颜色同步交互 */
   .project-grid:hover .project-item h2 {
     @apply text-gray-500;
   }
+
   .project-grid:hover .project-item:hover h2 {
-    @apply dark:text-[#Eaeaea] text-black font-bold;
+    @apply dark:text-[#Eaeaea] text-black;
   }
 </style>

@@ -10,7 +10,9 @@ interface Props {
 const { images } = Astro.props;
 ---
 
-<div class="modalImageWrapper hidden transition-opacity ease">
+<div
+  class="modalImageWrapper opacity-0 pointer-events-none transition-all duration-300 ease-in-out fixed inset-0 z-[60]"
+>
   <ModalImage />
 </div>
 

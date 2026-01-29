@@ -106,9 +106,10 @@ export async function getWorkById(workId: string) {
   
   if (index === 4) {
     // 返回所有工作的概览
-    return workRecords.map(({ workName, year, coverImage, placeHolderImage }) => ({ 
+    return workRecords.map(({ workName, year, ongoing, coverImage, placeHolderImage }) => ({ 
       workName, 
       year,
+      ongoing,
       coverImage, 
       placeHolderImage 
     }))
