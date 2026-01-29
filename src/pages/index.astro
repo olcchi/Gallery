@@ -67,22 +67,25 @@ const workList = await getWorkById("all");
     @apply opacity-100 grayscale-0 brightness-100;
   }
 
-  /* 当容器被悬停时，所有项目变暗/变灰 */
-  .project-grid:hover .project-item {
-    @apply opacity-30 grayscale-[0.5] brightness-75;
-  }
+  /* 仅在支持 hover 的设备上应用交互效果 */
+  @media (hover: hover) {
+    /* 当容器被悬停时，所有项目变暗/变灰 */
+    .project-grid:hover .project-item {
+      @apply opacity-30 grayscale-[0.5] brightness-75;
+    }
 
-  /* 当前悬停的项目保持/恢复亮起 */
-  .project-grid:hover .project-item:hover {
-    @apply opacity-100 grayscale-0 brightness-100;
-  }
+    /* 当前悬停的项目保持/恢复亮起 */
+    .project-grid:hover .project-item:hover {
+      @apply opacity-100 grayscale-0 brightness-100;
+    }
 
-  /* 文字颜色同步交互 */
-  .project-grid:hover .project-item h2 {
-    @apply text-gray-500;
-  }
+    /* 文字颜色同步交互 */
+    .project-grid:hover .project-item h2 {
+      @apply text-gray-500;
+    }
 
-  .project-grid:hover .project-item:hover h2 {
-    @apply dark:text-[#Eaeaea] text-black;
+    .project-grid:hover .project-item:hover h2 {
+      @apply dark:text-[#Eaeaea] text-black;
+    }
   }
 </style>
