@@ -42,8 +42,6 @@ export function createWaterfallLayout(config: WaterfallConfig) {
 
   function updateColumnCount() {
     const containerWidth = container.clientWidth;
-    console.log("Container width:", containerWidth); // 调试信息
-
     // 现在容器宽度是 min(90ch,95%)，约 720px-1000px+
     // 最小列数设为2
     if (containerWidth < 600) {

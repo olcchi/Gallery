@@ -4,11 +4,11 @@
             "workName": "Turpan",
             "year": "2024",
             "ongoing": true,
-            "coverImage": "/paper.png",
-            "placeHolderImage": "/paper.png",
+            "coverImage": "",
+            "placeHolderImage": "",
             "picture": [
                 {
-                    "url": "/paper.png",
+                    "url": "",
                     "alt": "Turpan Gallery Image"
                 }
             ]
@@ -16,11 +16,11 @@
         {
             "workName": "Unnoticed",
             "year": "2020",
-            "coverImage": "/paper.png",
-            "placeHolderImage": "/paper.png",
+            "coverImage": "",
+            "placeHolderImage": "",
             "picture": [
                 {
-                    "url": "/paper.png",
+                    "url": "",
                     "alt": "Unnoticed Gallery Image"
                 }
             ]
@@ -28,11 +28,11 @@
         {
             "workName": "Another Landscape",
             "year": "2020",
-            "coverImage": "/paper.png",
-            "placeHolderImage": "/paper.png",
+            "coverImage": "",
+            "placeHolderImage": "",
             "picture": [
                 {
-                    "url": "/paper.png",
+                    "url": "",
                     "alt": "Another Landscape Gallery Image"
                 }
             ]

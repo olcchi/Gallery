@@ -43,7 +43,7 @@ const picList = await getWorkById(work);
 // 转换为类型安全的图片数组
 const images: GalleryImage[] = Array.isArray(picList)
   ? picList.map((p: any) => ({
-      url: p.url || "/paper.png",
+      url: p.url || "",
       alt: p.alt || "Image",
     }))
   : [];
