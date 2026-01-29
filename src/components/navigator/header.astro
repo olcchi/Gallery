@@ -1,21 +1,6 @@
 ---
-const pages = [
-  {
-    slug: "Turpan",
-    work: "tu",
-    route: "Turpan",
-  },
-  {
-    slug: "Unnoticed",
-    work: "un",
-    route: "Unnoticed",
-  },
-  {
-    slug: "Another_Landscape",
-    work: "al",
-    route: "Another Landscape",
-  },
-];
+import { getWorks } from "../../utils/dataService";
+const pages = await getWorks();
 ---
 
 <header
@@ -44,7 +29,7 @@ const pages = [
               },
             ]}
           >
-            {p.route}
+            {p.workName}
           </a>
         );
       })

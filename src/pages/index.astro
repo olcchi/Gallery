@@ -1,12 +1,12 @@
 ---
 import GalleryLayout from "@layouts/galleryLayout.astro";
-import { getWorkById } from "../utils/dataService";
+import { getWorks } from "../utils/dataService";
 
 // 直接从数据服务获取所有工作数据
-const workList = await getWorkById("all");
+const workList = await getWorks();
 ---
 
-<GalleryLayout title={"Gallery - yi"}>
+<GalleryLayout title={"yi"}>
   <main class="fade-in">
     <section class="max-w-[1440px] mx-auto">
       <h1 class="text-xl md:text-2xl font-bold mb-8 md:mb-12">Projects</h1>
@@ -26,7 +26,7 @@ const workList = await getWorkById("all");
 
             return (
               <a
-                href={`/${work.workName.replace(/ /g, "_")}`}
+                href={`/${work.slug}`}
                 class="project-item group flex flex-col gap-2 cursor-pointer"
               >
                 <div class="relative overflow-hidden bg-gray-1 dark:bg-[#1a1a1a] aspect-square w-full">

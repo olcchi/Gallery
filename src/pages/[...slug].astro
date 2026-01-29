@@ -1,48 +1,29 @@
 ---
 import WorkLayout from "@layouts/workLayout.astro";
 import WaterfallGallery from "@components/WaterfallGallery.astro";
-import { getWorkById } from "../utils/dataService";
+import { getWorks } from "../utils/dataService";
 import type { GalleryImage } from "../types/gallery";
 
 export async function getStaticPaths() {
-  const pages = [
-    {
-      slug: "Turpan",
-      work: "tu",
-      route: "Turpan",
-    },
-    {
-      slug: "Unnoticed",
-      work: "un",
-      route: "Unnoticed",
-    },
-    {
-      slug: "Another_Landscape",
-      work: "al",
-      route: "Another Landscape",
-    },
-    // {
-    //   slug: 'Never_Know_How_Much_I_Love_You',
-    //   work: 'ne',
-    //   route: 'Never Know How Much I Love You',
-    // },
-  ];
-  return pages.map(({ slug, work, route }) => {
+  const works = await getWorks();
+  return works.map((work: any) => {
     return {
-      params: { slug },
-      props: { work, route },
+      params: { slug: work.slug },
+      props: { workData: work },
     };
   });
 }
 
-const { work, route } = Astro.props;
+interface Props {
+  workData: any;
+}
 
-// 直接从数据服务获取数据，避免循环依赖
-const picList = await getWorkById(work);
+const { workData } = Astro.props;
+const route = workData.workName;
 
 // 转换为类型安全的图片数组
-const images: GalleryImage[] = Array.isArray(picList)
-  ? picList.map((p: any) => ({
+const images: GalleryImage[] = Array.isArray(workData.picture)
+  ? workData.picture.map((p: any) => ({
       url: p.url || "",
       alt: p.alt || "Image",
     }))
