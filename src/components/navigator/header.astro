@@ -1,6 +1,7 @@
 ---
 import { getWorks } from "../../utils/dataService";
 const pages = await getWorks();
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 ---
 
 <header
@@ -8,7 +9,7 @@ const pages = await getWorks();
 >
   <a
     href="/"
-    class="group flex items-center gap-1.5 font-sm font-bold hover:opacity-70 transition-opacity"
+    class="group flex items-center gap-1.5 font-sm font-bold opacity-50 hover:opacity-100 transition-opacity"
   >
     <i class="i-ph-arrow-left transition-transform group-hover:-translate-x-1"
     ></i>
@@ -18,14 +19,14 @@ const pages = await getWorks();
   <nav class="flex gap-6 items-center lg:gap-8 text-xs font-bold">
     {
       pages.map((p) => {
+        const isActive = currentPath === `/${p.slug}`;
         return (
           <a
             href={`/${p.slug}`}
             class:list={[
-              "hover:text-gray-400 transition-colors",
+              "hover:opacity-100 transition-opacity",
               {
-                "text-gray-500 pointer-events-none":
-                  Astro.url.pathname.includes(p.slug),
+                "opacity-50": !isActive,
               },
             ]}
           >

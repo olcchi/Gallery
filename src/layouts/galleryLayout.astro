@@ -2,6 +2,9 @@
 import { themeScript } from "@scripts/themeController";
 import { ViewTransitions } from "astro:transitions";
 import "../styles/main.css";
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+
 interface Props {
   title?: string;
 }
@@ -33,13 +36,31 @@ const { title } = Astro.props;
       </a>
 
       <nav class="flex items-center gap-6 lg:gap-8 text-xs font-bold">
-        <a href="/" class="hover:text-gray-400 transition-colors">Project</a>
-        <a href="/me" class="hover:text-gray-400 transition-colors">Me?</a>
+        <a
+          href="/"
+          class:list={[
+            "hover:opacity-100 transition-opacity",
+            { "opacity-50": currentPath !== "/" },
+          ]}
+        >
+          Project
+        </a>
+        <a
+          href="/me"
+          class:list={[
+            "hover:opacity-100 transition-opacity",
+            { "opacity-50": currentPath !== "/me" },
+          ]}
+        >
+          Me?
+        </a>
         <a
           href="mailto:[earthb0y@outlook.com]"
           target="_blank"
-          class="hover:text-gray-400 transition-colors">Contact</a
+          class="opacity-50 hover:opacity-100 transition-opacity"
         >
+          Contact
+        </a>
       </nav>
     </header>
 
