@@ -117,19 +117,12 @@ export class ModalController {
   }
 
   private updateModalImage(index: number) {
-    this.modalImg.style.opacity = "0";
-    setTimeout(() => {
-      const img = this.flowImages[index];
-      if (!img) return;
-      
-      const cachedSrc = img.currentSrc || img.src;
-      this.modalImg.src = cachedSrc;
-      
-      this.modalImg.onload = () => {
-        this.modalImg.style.opacity = "1";
-        this.loadHighResImage(index);
-      };
-    }, 100);
+    const img = this.flowImages[index];
+    if (!img) return;
+
+    const cachedSrc = img.currentSrc || img.src;
+    this.modalImg.src = cachedSrc;
+    this.loadHighResImage(index);
     this.curImage.innerHTML = `${index + 1} of ${this.images.length}`;
   }
 
