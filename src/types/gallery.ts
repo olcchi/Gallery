@@ -7,6 +7,7 @@ export interface WaterfallConfig {
   columnCount?: number;
   gap?: number;
   containerId: string;
+  startDelay?: number;
 }
 
 export interface ModalConfig {

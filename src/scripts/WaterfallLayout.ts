@@ -11,7 +11,10 @@ export function createWaterfallLayout(config: WaterfallConfig) {
   let resizeObserver: ResizeObserver;
 
   // 初始化函数（相当于constructor）
-  function init() {
+  async function init() {
+    if (config.startDelay) {
+      await new Promise(resolve => setTimeout(resolve, config.startDelay));
+    }
     container = document.getElementById(config.containerId)!;
     items = Array.from(
       container.querySelectorAll(".waterfall-item")
