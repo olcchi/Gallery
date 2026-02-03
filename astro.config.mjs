@@ -24,9 +24,14 @@ export default defineConfig({
     failOnError: false,
     // 自动决定是否内联样式表，优化小文件的加载
     inlineStylesheets: 'auto',
+    // 资产内联限制
+    assetsInlineLimit: 4096,
   },
   // 启用预获取策略，当链接进入视口时自动预加载，显著提升多页应用体验
-  prefetch: true,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
   // 实验性配置，用于更好的错误处理
   experimental: {
     // 启用更好的错误处理
@@ -41,8 +46,15 @@ export default defineConfig({
     build: {
       cssCodeSplit: true, // 启用 CSS 代码拆分
       chunkSizeWarningLimit: 1000, // 提高分包警告阈值
+      minify: 'esbuild', // 使用 esbuild 压缩
       // 增加网络超时时间
       rollupOptions: {
+        output: {
+          // 优化代码分割
+          manualChunks: {
+            'vendor': ['astro:assets'],
+          },
+        },
         // 处理动态导入错误
         onwarn(warning, warn) {
           // 忽略某些警告
@@ -50,6 +62,10 @@ export default defineConfig({
           warn(warning)
         }
       }
+    },
+    // 优化依赖预构建
+    optimizeDeps: {
+      include: [],
     }
   }
 })

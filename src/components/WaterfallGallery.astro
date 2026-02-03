@@ -36,8 +36,10 @@ const { images } = Astro.props;
               data-src={image.url}
               src={image.url}
               format={"webp"}
-              loading={"lazy"}
-              quality={100}
+              loading={index < 4 ? "eager" : "lazy"}
+              decoding="async"
+              fetchpriority={index < 2 ? "high" : "auto"}
+              quality={75}
               alt={image.alt || "Image"}
             />
           ) : (
@@ -47,8 +49,10 @@ const { images } = Astro.props;
               data-src={image.url}
               src={image.url}
               format={"webp"}
-              loading={"lazy"}
-              quality={100}
+              loading={index < 4 ? "eager" : "lazy"}
+              decoding="async"
+              fetchpriority={index < 2 ? "high" : "auto"}
+              quality={75}
               alt={image.alt || "Image"}
             />
           )}
@@ -83,7 +87,7 @@ const { images } = Astro.props;
       containerId: "waterfall",
       columnCount: 4,
       gap: 8,
-      startDelay: 400, // 延迟 400ms，等待页面过渡动画完成后再显示图片
+      startDelay: 200, // 延迟 200ms,等待页面过渡动画完成后再显示图片
     });
 
     // 初始化模态框控制器

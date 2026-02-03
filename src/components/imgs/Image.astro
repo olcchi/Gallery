@@ -16,7 +16,9 @@ const { coverUrl, placeholderUrl } = Astro.props;
     class="coverImage transition-all z-0"
     format={"webp"}
     src={coverUrl}
-    quality={100}
+    quality={80}
+    decoding="async"
+    loading="lazy"
   />
 
   <AstroImage
@@ -27,6 +29,7 @@ const { coverUrl, placeholderUrl } = Astro.props;
     format={"webp"}
     src={placeholderUrl}
     quality={1}
+    decoding="async"
   />
 </main>
 

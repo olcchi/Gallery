@@ -34,6 +34,8 @@ const workList = await getWorks();
                     <img
                       src={coverUrl}
                       alt={work.workName}
+                      loading="lazy"
+                      decoding="async"
                       class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-102"
                     />
                   )}

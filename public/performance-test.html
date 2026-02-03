@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>性能测试报告</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .metric {
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+        }
+        .metric-name {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 24px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .metric-unit {
+            font-size: 14px;
+            color: #888;
+        }
+        .good { color: #4CAF50; }
+        .warning { color: #FF9800; }
+        .bad { color: #f44336; }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .comparison-item {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 网站性能测试工具</h1>
+        
+        <div class="info">
+            <strong>使用说明:</strong>
+            <ol>
+                <li>点击"运行性能测试"按钮</li>
+                <li>等待页面加载完成</li>
+                <li>查看下方的性能指标</li>
+                <li>对比优化前后的数据</li>
+            </ol>
+        </div>
+
+        <button onclick="runPerformanceTest()">🔍 运行性能测试</button>
+        <button onclick="clearResults()">🗑️ 清除结果</button>
+
+        <div id="results"></div>
+
+        <div class="comparison">
+            <div class="comparison-item">
+                <h3>优化前 (预期)</h3>
+                <ul>
+                    <li>DOMContentLoaded: ~3000ms</li>
+                    <li>图片质量: 100</li>
+                    <li>无资源预加载</li>
+                    <li>无智能加载策略</li>
+                </ul>
+            </div>
+            <div class="comparison-item">
+                <h3>优化后 (目标)</h3>
+                <ul>
+                    <li>DOMContentLoaded: ~1000-1500ms</li>
+                    <li>图片质量: 75-80</li>
+                    <li>DNS预连接 + 资源预加载</li>
+                    <li>智能图片加载策略</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function runPerformanceTest() {
+            const resultsDiv = document.getElementById('results');
+            
+            // 获取性能数据
+            const perfData = performance.getEntriesByType('navigation')[0];
+            const paintEntries = performance.getEntriesByType('paint');
+            
+            // 计算关键指标
+            const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.fetchStart;
+            const loadComplete = perfData.loadEventEnd - perfData.fetchStart;
+            const domInteractive = perfData.domInteractive - perfData.fetchStart;
+            
+            // First Paint 和 First Contentful Paint
+            let firstPaint = 0;
+            let firstContentfulPaint = 0;
+            
+            paintEntries.forEach(entry => {
+                if (entry.name === 'first-paint') {
+                    firstPaint = entry.startTime;
+                }
+                if (entry.name === 'first-contentful-paint') {
+                    firstContentfulPaint = entry.startTime;
+                }
+            });
+
+            // 获取资源加载信息
+            const resources = performance.getEntriesByType('resource');
+            const images = resources.filter(r => r.initiatorType === 'img');
+            const scripts = resources.filter(r => r.initiatorType === 'script');
+            const stylesheets = resources.filter(r => r.initiatorType === 'link' && r.name.includes('.css'));
+
+            // 计算总传输大小
+            const totalTransferSize = resources.reduce((sum, r) => sum + (r.transferSize || 0), 0);
+            
+            // 生成报告
+            let html = '<h2>📊 性能测试结果</h2>';
+            
+            // 核心 Web Vitals
+            html += '<h3>核心性能指标</h3>';
+            
+            html += createMetric(
+                'DOMContentLoaded',
+                domContentLoaded.toFixed(0),
+                'ms',
+                domContentLoaded < 1500 ? 'good' : domContentLoaded < 2500 ? 'warning' : 'bad'
+            );
+            
+            html += createMetric(
+                'Load Complete',
+                loadComplete.toFixed(0),
+                'ms',
+                loadComplete < 3000 ? 'good' : loadComplete < 5000 ? 'warning' : 'bad'
+            );
+            
+            html += createMetric(
+                'DOM Interactive',
+                domInteractive.toFixed(0),
+                'ms',
+                domInteractive < 1000 ? 'good' : domInteractive < 2000 ? 'warning' : 'bad'
+            );
+            
+            if (firstContentfulPaint > 0) {
+                html += createMetric(
+                    'First Contentful Paint (FCP)',
+                    firstContentfulPaint.toFixed(0),
+                    'ms',
+                    firstContentfulPaint < 1800 ? 'good' : firstContentfulPaint < 3000 ? 'warning' : 'bad'
+                );
+            }
+
+            // 资源统计
+            html += '<h3>资源加载统计</h3>';
+            html += createMetric('总传输大小', (totalTransferSize / 1024).toFixed(2), 'KB', 'good');
+            html += createMetric('图片数量', images.length, '个', 'good');
+            html += createMetric('脚本数量', scripts.length, '个', 'good');
+            html += createMetric('样式表数量', stylesheets.length, '个', 'good');
+
+            // 图片加载详情
+            if (images.length > 0) {
+                html += '<h3>图片加载详情</h3>';
+                const avgImageSize = images.reduce((sum, img) => sum + (img.transferSize || 0), 0) / images.length;
+                html += createMetric('平均图片大小', (avgImageSize / 1024).toFixed(2), 'KB', avgImageSize < 100000 ? 'good' : 'warning');
+                
+                const maxImageTime = Math.max(...images.map(img => img.duration));
+                html += createMetric('最慢图片加载时间', maxImageTime.toFixed(0), 'ms', maxImageTime < 1000 ? 'good' : 'warning');
+            }
+
+            // 性能评分
+            html += '<h3>性能评分</h3>';
+            const score = calculateScore(domContentLoaded, loadComplete, firstContentfulPaint);
+            html += `<div class="metric">
+                <div class="metric-name">总体评分</div>
+                <div class="metric-value ${score > 80 ? 'good' : score > 50 ? 'warning' : 'bad'}">
+                    ${score}/100
+                </div>
+            </div>`;
+
+            resultsDiv.innerHTML = html;
+        }
+
+        function createMetric(name, value, unit, status) {
+            return `
+                <div class="metric">
+                    <div class="metric-name">${name}</div>
+                    <div class="metric-value ${status}">
+                        ${value} <span class="metric-unit">${unit}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateScore(dcl, load, fcp) {
+            let score = 100;
+            
+            // DOMContentLoaded 权重 40%
+            if (dcl > 3000) score -= 40;
+            else if (dcl > 2000) score -= 30;
+            else if (dcl > 1500) score -= 20;
+            else if (dcl > 1000) score -= 10;
+            
+            // Load Complete 权重 30%
+            if (load > 5000) score -= 30;
+            else if (load > 4000) score -= 20;
+            else if (load > 3000) score -= 10;
+            
+            // FCP 权重 30%
+            if (fcp > 3000) score -= 30;
+            else if (fcp > 2000) score -= 20;
+            else if (fcp > 1800) score -= 10;
+            
+            return Math.max(0, score);
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+        }
+
+        // 页面加载完成后自动运行测试
+        window.addEventListener('load', () => {
+            setTimeout(runPerformanceTest, 100);
+        });
+    </script>
+</body>
+</html>
