@@ -21,46 +21,44 @@ const { images } = Astro.props;
     images
       .filter((image: GalleryImage) => image.url && image.url.trim() !== "")
       .map((image: GalleryImage, index: number) => {
-      // 检查是否是本地图片
-      const isLocalImage = image.url.startsWith("/");
+        // 检查是否是本地图片
+        const isLocalImage = image.url.startsWith("/");
 
-      return (
-        <div
-          class="waterfall-item"
-          data-index={index}
-          style="opacity: 0; position: absolute;"
-        >
-          {isLocalImage ? (
-            <Image
-              class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
-              width={400}
-              height={300}
-              data-src={image.url}
-              src={image.url}
-              format={"webp"}
-              loading={index < 4 ? "eager" : "lazy"}
-              decoding="async"
-              fetchpriority={index < 2 ? "high" : "auto"}
-              quality={75}
-              alt={image.alt || "Image"}
-            />
-          ) : (
-            <Image
-              class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
-              inferSize={true}
-              data-src={image.url}
-              src={image.url}
-              format={"webp"}
-              loading={index < 4 ? "eager" : "lazy"}
-              decoding="async"
-              fetchpriority={index < 2 ? "high" : "auto"}
-              quality={75}
-              alt={image.alt || "Image"}
-            />
-          )}
-        </div>
-      );
-    })
+        return (
+          <div
+            class="waterfall-item"
+            data-index={index}
+            style="opacity: 0; position: absolute;"
+          >
+            {isLocalImage ? (
+              <Image
+                class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
+                width={400}
+                height={300}
+                data-src={image.url}
+                src={image.url}
+                format={"webp"}
+                loading={index < 4 ? "eager" : "lazy"}
+                decoding="async"
+                fetchpriority={index < 2 ? "high" : "auto"}
+                quality={75}
+                alt={image.alt || "Image"}
+              />
+            ) : (
+              // 远程图片直接用 <img>，跳过 Astro 构建时的尺寸推断网络请求
+              <img
+                class="flowImage w-full cursor-pointer transition-opacity ease duration-500 hover:opacity-60"
+                data-src={image.url}
+                src={image.url}
+                loading={index < 4 ? "eager" : "lazy"}
+                decoding="async"
+                fetchpriority={index < 2 ? "high" : "auto"}
+                alt={image.alt || "Image"}
+              />
+            )}
+          </div>
+        );
+      })
   }
 </div>
 
