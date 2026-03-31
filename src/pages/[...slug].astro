@@ -21,12 +21,14 @@ interface Props {
 const { workData } = Astro.props;
 const route = workData.workName;
 
-// 转换为类型安全的图片数组
+// 转换为类型安全的图片数组，过滤掉 url 为空的条目
 const images: GalleryImage[] = Array.isArray(workData.picture)
-  ? workData.picture.map((p: any) => ({
-      url: p.url || "",
-      alt: p.alt || "Image",
-    }))
+  ? workData.picture
+      .filter((p: any) => p.url && typeof p.url === "string" && p.url.trim() !== "")
+      .map((p: any) => ({
+        url: p.url,
+        alt: p.alt || `${route} Gallery Image`,
+      }))
   : [];
 ---
 

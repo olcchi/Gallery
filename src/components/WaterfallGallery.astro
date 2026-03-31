@@ -18,7 +18,9 @@ const { images } = Astro.props;
 
 <div class="waterfall-container mb-25" id="waterfall">
   {
-    images.map((image: GalleryImage, index: number) => {
+    images
+      .filter((image: GalleryImage) => image.url && image.url.trim() !== "")
+      .map((image: GalleryImage, index: number) => {
       // 检查是否是本地图片
       const isLocalImage = image.url.startsWith("/");
 
